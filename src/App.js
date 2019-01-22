@@ -19,7 +19,6 @@ export class App extends React.Component {
         e.preventDefault();
         if (!this.form.valid()) {
             this.setState({ formErrors: this.form.errors });
-            console.log(this.form.errors);
             return;
         } 
         console.log(this.form.values());
