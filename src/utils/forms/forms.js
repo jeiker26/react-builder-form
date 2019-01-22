@@ -5,7 +5,7 @@ export class Form {
     errors = {};
 
     constructor(elements) {
-        this.elements = elements;
+        this.elements = elements || this.elements;
     }
 
     valid = () => {
@@ -37,6 +37,9 @@ export class Form {
     completeDefault = () => Object.keys(this.elements).forEach(e => this.elements[e].setDefaultValue());
 
     setValues = values => Object.keys(this.elements).forEach(e => { values[e] && this.elements[e].setValue(values[e]); });
+
+    /** New implements */
+    setElements = elements => { this.elements = elements; }
 }
 
 export class FormElement {
