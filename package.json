@@ -1,0 +1,24 @@
+{
+  "name": "react-forms-builder",
+  "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "react-forms",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "prettier": "1.13.0",
+    "react-scripts": "^1.1.4"
+  },
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "prettier": {
+    "trailingComma": "all"
+  }
+}
