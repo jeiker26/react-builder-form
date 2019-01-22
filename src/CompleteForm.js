@@ -1,6 +1,5 @@
 import React from "react";
 import { formWrapper} from "./utils/forms/FormWrapper";
-import { FormElement } from "./utils/forms/forms";
 import { minstringvalidator, startWithJJ, maxstringvalidator, more18age } from "./utils/validators/validators";
 
 export class CompleteFormComponent extends React.Component {
@@ -10,8 +9,14 @@ export class CompleteFormComponent extends React.Component {
 
     componentDidMount() {
         this.props.form.setElements({ 
-            name: new FormElement("Jeus", [minstringvalidator, startWithJJ, maxstringvalidator]),
-            age: new FormElement("23", [more18age]),
+            name: {
+                defaultValue: "Jeus", 
+                validators: [minstringvalidator, startWithJJ, maxstringvalidator]
+            },
+            age: {
+                defaultValue: "23", 
+                validators: [more18age]
+            }
         });
     }
 
@@ -39,13 +44,17 @@ export class CompleteFormComponent extends React.Component {
             Soy un formulario
             <form onSubmit={this.handleSubmit}>
                 <input type="text" ref={form.elements.name.ref} />
+                <br />
+                {form.errors.name && form.errors.name.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
+
+                <br />
+                <br />
+
                 <input type="number" ref={form.elements.age.ref} />
-                
-                {form.errors.name && form.errors.name.length && form.errors.name.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
+                <br />
+                {form.errors.age && form.errors.age.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
 
-                {form.errors.age && form.errors.age.length && form.errors.age.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
-
-
+                <br />
                 <button>Submit</button>
                 <button onClick={this.handleClearForm}>Clear</button>
                 <button onClick={this.hanleSetValues}>SetValues</button>

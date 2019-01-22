@@ -1,4 +1,5 @@
 import React from "react";
+import { FormElement } from "./forms";
 
 export const formWrapper = (WrappedComponent) => {
     return class extends React.Component {
@@ -56,8 +57,16 @@ export const formWrapper = (WrappedComponent) => {
             this.setState({ errors: {}, values: {}, isValid: false })
         }
 
+        createElement = element => new FormElement(element.defaultValue, element.validators)
+
         /** New implements */
-        setElements = elements => this.setState({elements}, this._completeDefaultValues)
+        setElements = elements => {
+            const elementsTransform = {};
+            Object.keys(elements).forEach(e => {
+                elementsTransform[e] = this.createElement(elements[e]);
+            });
+            this.setState({ elements: elementsTransform }, this._completeDefaultValues);
+        }
 
         interfaceform = () => {
             return {
