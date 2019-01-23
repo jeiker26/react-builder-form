@@ -13,6 +13,10 @@ export const formWrapper = (WrappedComponent) => {
             };
         }
 
+        submit = () => {
+            this.compile();
+        }
+
         compile = () => {
             const errors = this.checkErrors();
             const values = this.values();
@@ -92,7 +96,7 @@ export const formWrapper = (WrappedComponent) => {
 
         formElementValid = elementName => {
             let element = this.readFormElement(elementName);
-            return element.validators.map(validator => validator.exec(element.value)).filter(res => !!res);
+            return element.validators.map(validator => validator.exec(element.value, this.state.elements)).filter(res => !!res);
         }
 
         formElementOnChange = (e, elementName) => {

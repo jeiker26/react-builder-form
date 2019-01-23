@@ -1,6 +1,6 @@
 import React from "react";
-import { formWrapper} from "./utils/forms/FormWrapper";
-import { minstringvalidator, startWithJJ, maxstringvalidator, more18age } from "./utils/validators/validators";
+import { formWrapper } from "./utils/forms/FormWrapper";
+import { minstringvalidator, startWithJJ, maxstringvalidator, more18age, moreAgeEqual } from "./utils/validators/validators";
 
 export class CompleteFormComponent extends React.Component {
     componentDidMount() {
@@ -12,13 +12,18 @@ export class CompleteFormComponent extends React.Component {
             age: {
                 defaultValue: "23", 
                 validators: [more18age]
+            },
+            repeatAge: {
+                defaultValue: "",
+                validators: [more18age, moreAgeEqual]
             }
         });
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.compile();
+    componentDidUpdate(prevProps) {
+        if (this.props.form.isValid) {
+          console.log("Send data:", this.props.form.values);
+        }
     }
 
     handleClearForm = e => {
@@ -38,17 +43,24 @@ export class CompleteFormComponent extends React.Component {
         : 
         (<div>
             Soy un formulario
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={e => {
+                e.preventDefault(); 
+                form.compile();
+            }}>
                 <input type="text" value={form.elements.name.value} onChange={form.elements.name.onChange} />
                 <br />
                 {form.errors.name && form.errors.name.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
-
+                
                 <br />
                 <br />
 
                 <input type="number" value={form.elements.age.value} onChange={form.elements.age.onChange} />
                 <br />
                 {form.errors.age && form.errors.age.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
+                <br />
+                <input type="number" value={form.elements.repeatAge.value} onChange={form.elements.repeatAge.onChange} />
+                <br />
+                {form.errors.repeatAge && form.errors.repeatAge.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
 
                 <br />
                 <button>Submit</button>

@@ -82,6 +82,6 @@ export class Validator {
          this.functionValidator = functionValidator || this.functionValidator;
     }
 
-    exec = ref => this.functionValidator(ref)
+    exec = (value, formElment) => this.functionValidator(value, formElment)
 }
 
