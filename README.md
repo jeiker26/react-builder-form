@@ -1,6 +1,3 @@
-React form builder
----
-
   
 Small library to simplify the use of forms in React.
 
@@ -43,6 +40,55 @@ You can install with [NPM](https://npmjs.com/)
 ## Examples (in progress)
 
 * [Basics]
+```jsx
+class BasicFormComponent extends React.Component {
+	componentDidMount() {
+		// Add elements
+		this.props.form.setElements({
+			name: {
+				defaultValue: "Jeus",
+				validators: []
+			}
+		});
+	}
+
+	componentDidUpdate(prevProps) {
+		// Check if isValid form
+		if (this.props.form.isValid) {
+			console.log("Form data:", this.props.form.values);
+			console.log("Form errors:", this.props.form.errors);
+		}
+	}
+
+	render() {
+		const { form } = this.props;
+		return form.loading ?
+					(<p>Loading...</p>)
+					:
+					(<div>
+						Soy un formulario
+						<form onSubmit={e  => {
+							e.preventDefault();
+							form.compile();
+						}}>
+						{/** Add property value and onChange to the field */}
+						<input 
+							type="text"
+							value={form.elements.name.value}
+							onChange={form.elements.name.onChange} />
+							
+							{/** Get field errors */}
+							{form.errors.name && form.errors.name.map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
+
+							<button>Submit</button>
+						</form>
+					</div>);
+	}
+
+}
+
+export const BasicForm = formWrapper(BasicFormComponent);
+```
 * [Avanced Validation]
 
 
