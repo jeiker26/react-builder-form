@@ -1,5 +1,4 @@
 import React from "react";
-import { FormElement } from "./forms";
 
 export const formWrapper = (WrappedComponent) => {
     return class extends React.Component {
@@ -20,54 +19,6 @@ export const formWrapper = (WrappedComponent) => {
             this.setState({ errors, values, isValid: !errors.totalErrors });
         }
 
-        checkErrors = () => {
-            let _errors = {
-                totalErrors: 0
-            }
-            Object.keys(this.state.elements).forEach(e => {
-                const elementErrors = this.state.elements[e].valid();
-                if (elementErrors) {
-                    _errors[e] = elementErrors;
-                    _errors.totalErrors += elementErrors.length;
-                }
-            });
-
-            return _errors;
-        }
-
-        values = () => {
-            const _values = {};
-            Object.keys(this.state.elements).forEach(e => {
-                _values[e] = this.state.elements[e].value();
-            })
-            return _values;
-        }
-
-        clear = () => {
-            this.setState({ errors: {}, values: {}, isValid: false }, () => Object.keys(this.state.elements).forEach(e => this.state.elements[e].clear()));
-        }
-
-        _completeDefaultValues = () => {
-            this.setState({ loading: false }, () => Object.keys(this.state.elements).forEach(e => this.state.elements[e].defaultValue && this.state.elements[e].setDefaultValue()))
-        };
-
-        setValues = values => {
-            Object.keys(this.state.elements).forEach(e => { values[e] && this.state.elements[e].setValue(values[e]); });
-
-            this.setState({ errors: {}, values: {}, isValid: false })
-        }
-
-        createElement = element => new FormElement(element.defaultValue, element.validators)
-
-        /** New implements */
-        setElements = elements => {
-            const elementsTransform = {};
-            Object.keys(elements).forEach(e => {
-                elementsTransform[e] = this.createElement(elements[e]);
-            });
-            this.setState({ elements: elementsTransform }, this._completeDefaultValues);
-        }
-
         interfaceform = () => {
             return {
                 ...this.state,
@@ -81,5 +32,81 @@ export const formWrapper = (WrappedComponent) => {
         render() {
             return <WrappedComponent form={this.interfaceform()} {...this.props} />;
         }
+
+
+        /** Form functions */
+        checkErrors = () => {
+            let _errors = {
+                totalErrors: 0
+            }
+            Object.keys(this.state.elements).forEach(e => {
+                const elementErrors = this.formElementValid(e);
+                if (elementErrors) {
+                    _errors[e] = elementErrors;
+                    _errors.totalErrors += elementErrors.length;
+                }
+            });
+
+            return _errors;
+        }
+
+        values = () => {
+            const _values = {};
+            Object.keys(this.state.elements).forEach(e => {
+                _values[e] = this.state.elements[e].value;
+            })
+            return _values;
+        }
+
+        clear = () => {
+            const clearElementsObject = {};
+            Object.keys(this.state.elements).forEach(e => {
+                clearElementsObject[e] = { ...this.state.elements[e], value: "" };
+            });
+            
+            this.setState({ errors: {}, values: {}, isValid: false, elements: clearElementsObject });
+        }
+
+        setValues = values => {
+            const elementsWithValues = {};
+            Object.keys(this.state.elements).forEach(e => {
+                elementsWithValues[e] = { ...this.state.elements[e], value: values[e] };
+            });
+            
+            this.setState({ errors: {}, values: {}, isValid: false, elements: elementsWithValues });
+        }
+
+        setElements = elements => {
+            const elementsTransform = {};
+            Object.keys(elements).forEach(e => {
+                elementsTransform[e] = this.createFormElement(e, elements[e]);
+            });
+            this.setState({ elements: elementsTransform, loading: false });
+        }
+
+
+        /** Element functions */
+        createFormElement(name, {defaultValue, validators}) {
+            return { defaultValue, validators, value: defaultValue || "", onChange: e => this.formElementOnChange(e, name) };
+        }
+
+        formElementValid = elementName => {
+            let element = this.readFormElement(elementName);
+            return element.validators.map(validator => validator.exec(element.value)).filter(res => !!res);
+        }
+
+        formElementOnChange = (e, elementName) => {
+            let element = this.readFormElement(elementName);
+            element.value = e.target.value;
+            this.saveFormElement(elementName, element);
+        }
+
+        readFormElement = elementName => this.state.elements[elementName];
+
+        saveFormElement = (elementName, data) => {
+            let elements = this.state.elements;
+            delete elements[elementName];
+            this.setState({ elements: {...elements, [elementName]: data }});
+        }
     };
-  }
+}
