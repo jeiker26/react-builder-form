@@ -63,26 +63,26 @@ class BasicFormComponent extends React.Component {
 	render() {
 		const { form } = this.props;
 		return form.loading ?
-					(<p>Loading...</p>)
-					:
-					(<div>
-						Soy un formulario
-						<form onSubmit={e  => {
-							e.preventDefault();
-							form.compile();
-						}}>
-						{/** Add property value and onChange to the field */}
-						<input 
-							type="text"
-							value={form.elements.name.value}
-							onChange={form.elements.name.onChange} />
-							
-							{/** Get field errors */}
-							{form.errors.name && form.errors.name.map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
+            (<p>Loading...</p>)
+            :
+            (<div>
+                Soy un formulario
+                <form onSubmit={e  => {
+                    e.preventDefault();
+                    form.compile();
+                }}>
+                {/** Add property value and onChange to the field */}
+                <input 
+                    type="text"
+                    value={form.elements.name.value}
+                    onChange={form.elements.name.onChange} />
+                    
+                    {/** Get field errors */}
+                    {form.errors.name && form.errors.name.map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
 
-							<button>Submit</button>
-						</form>
-					</div>);
+                    <button>Submit</button>
+                </form>
+            </div>);
 	}
 
 }
