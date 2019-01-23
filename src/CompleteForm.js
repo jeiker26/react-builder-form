@@ -4,7 +4,7 @@ import { minstringvalidator, startWithJJ, maxstringvalidator, more18age, moreAge
 
 export class CompleteFormComponent extends React.Component {
     componentDidMount() {
-        this.props.form.setElements({ 
+        this.props.form.setFields({ 
             name: {
                 defaultValue: "Jeus", 
                 validators: [minstringvalidator, startWithJJ, maxstringvalidator]
@@ -49,7 +49,7 @@ export class CompleteFormComponent extends React.Component {
             }}>
                 <input type="text" value={form.elements.name.value} onChange={form.elements.name.onChange} />
                 <br />
-                {form.errors.name && form.errors.name.map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
+                {form.getErrors("name").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 
                 <br />
                 <br />

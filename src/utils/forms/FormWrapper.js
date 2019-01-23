@@ -23,13 +23,16 @@ export const formWrapper = (WrappedComponent) => {
             this.setState({ errors, values, isValid: !errors.totalErrors });
         }
 
+        getErrors = elementName => (this.state.errors[elementName] || []);
+
         interfaceform = () => {
             return {
                 ...this.state,
                 compile: this.compile,
                 clear: this.clear,
                 setValues: this.setValues,
-                setElements: this.setElements
+                setFields: this.setElements,
+                getErrors: this.getErrors
             }
         }
   
