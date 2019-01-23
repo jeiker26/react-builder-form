@@ -41,6 +41,7 @@ You can install with [NPM](https://npmjs.com/)
 
 * [Basics]
 ```jsx
+// Todo: add import
 class BasicFormComponent extends React.Component {
 	componentDidMount() {
 		// Add elements
