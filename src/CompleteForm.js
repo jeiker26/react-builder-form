@@ -43,10 +43,7 @@ export class CompleteFormComponent extends React.Component {
         : 
         (<div>
             Soy un formulario
-            <form onSubmit={e => {
-                e.preventDefault(); 
-                form.compile();
-            }}>
+            <form onSubmit={form.submit}>
                 <input type="text" value={form.elements.name.value} onChange={form.elements.name.onChange} />
                 <br />
                 {form.getErrors("name").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}

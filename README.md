@@ -7,7 +7,6 @@ With a simple **higher**-**order** component (HOC), you can get:
 3.  Control of validations.
 
 ## Todo
-- Change submit.
 - Tests.
 - Open fields properties for include (onclick, onFocus, ...)
 - Installation (In progress NPM package). [rollup](https://github.com/rollup/rollup)
@@ -50,10 +49,7 @@ class BasicFormComponent extends React.Component {
             :
             (<div>
                 Soy un formulario
-                <form onSubmit={e  => {
-                    e.preventDefault();
-                    form.compile();
-                }}>
+                <form onSubmit={form.submit}>
                 {/** Add property value and onChange to the field */}
                 <input 
                     type="text"
@@ -88,7 +84,7 @@ export const BasicForm = formWrapper(BasicFormComponent);
 | `setFields()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }` | Add the form fields, along with their default value and validations. Method used in the `componentDidMount()` |
 | `setValues()` | `{ nameField1: "foo", nameField2: "var", nameFieldN: "test" }` | Set values. The form must have the `loading` to `false`. |
 | `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValid`.
-| `compile()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
+| `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
 | `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
 
 #### Render props
@@ -97,7 +93,7 @@ export const BasicForm = formWrapper(BasicFormComponent);
 | `elements` | `{ defaultValue: string, validators: Validators[]}` | `null` | Form elements. |
 | `errors` | `{ elementKey: String[], ... }` | `{}` | Errors by fields. |
 | `values` | `{ element: String, ... }` | `{}` | Values by fields. |
-| `isValid` | `boolean` | `false`| All fields comply with their validations. After `compile()`. |
+| `isValid` | `boolean` | `false`| All fields comply with their validations. After `submit()`. |
 | `loading` | `boolean` | `true` | `false`, when the form is ready. After `setFields()`.|
 
 ---

@@ -13,11 +13,8 @@ export const formWrapper = (WrappedComponent) => {
             };
         }
 
-        submit = () => {
-            this.compile();
-        }
-
-        compile = () => {
+        compile = e => {
+            e.preventDefault();
             const errors = this.checkErrors();
             const values = this.values();
             this.setState({ errors, values, isValid: !errors.totalErrors });
@@ -28,7 +25,7 @@ export const formWrapper = (WrappedComponent) => {
         interfaceform = () => {
             return {
                 ...this.state,
-                compile: this.compile,
+                submit: this.compile,
                 clear: this.clear,
                 setValues: this.setValues,
                 setFields: this.setElements,
