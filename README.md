@@ -8,37 +8,15 @@ With a simple **higher**-**order** component (HOC), you can get:
 
 ## Todo
 - Change submit.
-- 
 - Tests.
-- Installation (In progress NPM package).
+- Open fields properties for include (onclick, onFocus, ...)
+- Installation (In progress NPM package). [rollup](https://github.com/rollup/rollup)
 - Examples.
 
 ## Getting Started
 
 ### Installation (In progress NPM package)
 You can install with [NPM](https://npmjs.com/)
-
-### Usage
-
-
-### Doc
-#### Functions
-| function | params | description |
-|--|--|--|
-| `setFields()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }` | Add the form fields, along with their default value and validations. Method used in the `componentDidMount()` |
-| `setValues()` | `{ nameField1: "foo", nameField2: "var", nameFieldN: "test" }` | Set values. The form must have the `loading` to `false`. |
-| `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValid`.
-| `compile()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
-| `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
-
-#### Render props
-| prop | types | default value | description |
-|--|--|--|--|
-| `elements` | `{ defaultValue: string, validators: Validators[]}` | `null` | Form elements. |
-| `errors` | `{ elementKey: String[], ... }` | `{}` | Errors by fields. |
-| `values` | `{ element: String, ... }` | `{}` | Values by fields. |
-| `isValid` | `boolean` | `false`| All fields comply with their validations. After `compile()`. |
-| `loading` | `boolean` | `true` | `false`, when the form is ready. After `setFields()`.|
 
 ## Examples (in progress)
 
@@ -58,10 +36,11 @@ class BasicFormComponent extends React.Component {
 
 	componentDidUpdate(prevProps) {
 		// Check if isValid form
-		if (this.props.form.isValid) {
-			console.log("Form data:", this.props.form.values);
-			console.log("Form errors:", this.props.form.errors);
-		}
+		if (!this.props.form.isValid) {
+            console.log("Form errors:", this.props.form.errors);
+            return;
+        }
+        console.log("Form data:", this.props.form.values);
 	}
 
 	render() {
@@ -98,6 +77,28 @@ export const BasicForm = formWrapper(BasicFormComponent);
 ```
 * [Avanced Validation]
 
+
+### Usage
+
+
+### Doc
+#### Functions
+| function | params | description |
+|--|--|--|
+| `setFields()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }` | Add the form fields, along with their default value and validations. Method used in the `componentDidMount()` |
+| `setValues()` | `{ nameField1: "foo", nameField2: "var", nameFieldN: "test" }` | Set values. The form must have the `loading` to `false`. |
+| `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValid`.
+| `compile()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
+| `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
+
+#### Render props
+| prop | types | default value | description |
+|--|--|--|--|
+| `elements` | `{ defaultValue: string, validators: Validators[]}` | `null` | Form elements. |
+| `errors` | `{ elementKey: String[], ... }` | `{}` | Errors by fields. |
+| `values` | `{ element: String, ... }` | `{}` | Values by fields. |
+| `isValid` | `boolean` | `false`| All fields comply with their validations. After `compile()`. |
+| `loading` | `boolean` | `true` | `false`, when the form is ready. After `setFields()`.|
 
 ---
 
