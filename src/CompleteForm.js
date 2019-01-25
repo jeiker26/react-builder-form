@@ -29,6 +29,10 @@ export class CompleteFormComponent extends React.Component {
             films: {
                 defaultValue: ["film1", "film3"],
                 validators: [isRequired]
+            },
+            car: {
+                defaultValue: "audi",
+                validators: [isRequired]
             }
         });
     }
@@ -111,6 +115,16 @@ export class CompleteFormComponent extends React.Component {
                 <br />
 
                 
+                <br />
+                <br />
+
+                <select {...form.getSelect("car")}>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
+
                 <br />
                 <br />
 

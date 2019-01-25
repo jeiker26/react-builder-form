@@ -37,6 +37,7 @@ export const formWrapper = (WrappedComponent) => {
                 setFields: this.setElements,
                 getErrors: this.getErrors,
                 getInput: fieldName => { return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) }; },
+                getSelect: fieldName => { return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) }; },
                 getCheckbox: fieldName => { 
                     return { 
                         onChange: this.getOnChange(fieldName), 
