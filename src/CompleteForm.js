@@ -7,12 +7,15 @@ export class CompleteFormComponent extends React.Component {
         // this.props.form.validationWriteWithoutSubmit(true);
         this.props.form.setFields({ 
             name: {
+                defaultValue: "asdasd",
                 validators: [minstringvalidator, maxstringvalidator, isRequired]
             },
             email: {
+                defaultValue: "jesus-aaaaaa@gml.c",
                 validators: [emailValidator, isRequired]
             },
             repeatEmail: {
+                defaultValue: "jesus-aaaaaa@gml.c",
                 validators: [equalValidatorEmail, isRequired]
             },
             policyPrivacy: {
@@ -20,11 +23,11 @@ export class CompleteFormComponent extends React.Component {
                 validators: [isRequired]
             },
             gender: {
-                // defaultValue: "x",
+                defaultValue: "x",
                 validators: [isRequired]
             },
             films: {
-                defaultValue: "film1", // or ["film1", "film3"]
+                defaultValue: ["film1", "film3"],
                 validators: [isRequired]
             }
         });
@@ -43,7 +46,13 @@ export class CompleteFormComponent extends React.Component {
 
     hanleSetValues = e => {
         e.preventDefault();
-        this.props.form.setValues({ name: "Jesussss", age: 42});
+        this.props.form.setValues({ 
+            name: "Jesussss", 
+            email: "jesusgrads@mmm.es", 
+            policyPrivacy: true, 
+            gender: "y", 
+            films: ["film2"]
+        });
     }
 
     render() {
@@ -74,7 +83,7 @@ export class CompleteFormComponent extends React.Component {
                 <br />
 
                 Condiciones de privacidad:
-                <input type="checkbox" defaultChecked={form.elements.policyPrivacy.value} value={form.elements.policyPrivacy.value} onChange={form.elements.policyPrivacy.onChange} />
+                <input type="checkbox" checked={form.elements.policyPrivacy.value} value={form.elements.policyPrivacy.value} onChange={form.elements.policyPrivacy.onChange} />
                 <br />
                 {form.getErrors("policyPrivacy").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
 
@@ -82,21 +91,21 @@ export class CompleteFormComponent extends React.Component {
 
                 <br />
 
-                Genero: 
-                <input type="radio" name="drone" value="x" defaultChecked={form.elements.gender.value === "x"} onChange={form.elements.gender.onChange} />
+                Genero:
+                <input type="radio" name="drone" value="x" checked={form.elements.gender.value === "x"} onChange={form.elements.gender.onChange} />
                 <label>x</label>
-                <input type="radio" name="drone" value="y" defaultChecked={form.elements.gender.value === "y"} onChange={form.elements.gender.onChange}/>
+                <input type="radio" name="drone" value="y" checked={form.elements.gender.value === "y"} onChange={form.elements.gender.onChange}/>
                 <label>y</label>
                 {form.getErrors("gender").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />
 
 
                 Tipos de peliculas:
-                <input type="checkbox" name="films[]" value="film1" defaultChecked={form.elements.films.value && form.elements.films.value.indexOf("film1") > -1 } onChange={form.elements.films.onChange} />
+                <input type="checkbox" name="films[]" value="film1" checked={form.elements.films.value && form.elements.films.value.indexOf("film1") > -1 } onChange={form.elements.films.onChange} />
                 <label>film1</label>
-                <input type="checkbox" name="films[]" value="film2" defaultChecked={form.elements.films.value && form.elements.films.value.indexOf("film2") > -1 } onChange={form.elements.films.onChange} />
+                <input type="checkbox" name="films[]" value="film2" checked={form.elements.films.value && form.elements.films.value.indexOf("film2") > -1 } onChange={form.elements.films.onChange} />
                 <label>film2</label>
-                <input type="checkbox" name="films[]" value="film3" defaultChecked={form.elements.films.value && form.elements.films.value.indexOf("film3") > -1 } onChange={form.elements.films.onChange}/>
+                <input type="checkbox" name="films[]" value="film3" checked={form.elements.films.value && form.elements.films.value.indexOf("film3") > -1 } onChange={form.elements.films.onChange}/>
                 <label>film3</label>
                 {form.getErrors("films").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />

@@ -21,7 +21,7 @@ export const formWrapper = (WrappedComponent) => {
             e.preventDefault();
             const errors = this.checkErrors();
             const values = this.values();
-            this.setState({ errors, values, isValid: !errors.totalErrors, submited: true });
+            this.setState({ errors, values, isValid: !errors.totalErrors, submited: true, isValidationWrite: true });
         }
 
         getErrors = elementName => (this.state.errors[elementName] || []);
@@ -71,19 +71,31 @@ export const formWrapper = (WrappedComponent) => {
         clear = () => {
             const clearElementsObject = {};
             Object.keys(this.state.elements).forEach(e => {
-                clearElementsObject[e] = { ...this.state.elements[e], value: "" };
+                clearElementsObject[e] = { ...this.state.elements[e], value: this.transformFalseValue(this.state.elements[e].value) };
             });
             
-            this.setState({ errors: {}, values: {}, isValid: false, elements: clearElementsObject });
+            this.setState({ errors: {}, values: {}, isValid: false, submited: false, elements: clearElementsObject });
+        }
+
+        transformFalseValue = value => {
+            if (Array.isArray(value)) {
+                return [];
+            }
+
+            if (typeof value === 'boolean') {
+                return false;
+            }
+
+            return "";
         }
 
         setValues = values => {
             const elementsWithValues = {};
             Object.keys(this.state.elements).forEach(e => {
-                elementsWithValues[e] = { ...this.state.elements[e], value: values[e] };
+                elementsWithValues[e] = { ...this.state.elements[e], value: values[e] || this.transformFalseValue(this.state.elements[e].value) };
             });
             
-            this.setState({ errors: {}, values: {}, isValid: false, elements: elementsWithValues });
+            this.setState({ errors: {}, values: {}, isValid: false, submited: false, elements: elementsWithValues });
         }
 
         setElements = elements => {
@@ -142,9 +154,9 @@ export const formWrapper = (WrappedComponent) => {
             let elements = this.state.elements;
             delete elements[elementName];
             
-            this.setState({ elements: {...elements, [elementName]: data }}, () => {
+            this.setState({ elements: {...elements, [elementName]: data }, submited: false, isValid: false }, () => {
                 // Get and set error errors
-                if (this.state.isValidationWrite || this.state.submited) {
+                if (this.state.isValidationWrite) {
                     const errors = this.state.errors;
                     errors[elementName] = this.formElementValid(elementName);
                     this.setState({ errors });
