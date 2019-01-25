@@ -9,15 +9,19 @@ export const formWrapper = (WrappedComponent) => {
                 errors: {},
                 values: {},
                 isValid: false,
-                loading: true
+                loading: true,
+                isValidationWrite: false,
+                submited: false
             };
         }
+
+        validationWrite = value => this.setState({ isValidationWrite: value });
 
         compile = e => {
             e.preventDefault();
             const errors = this.checkErrors();
             const values = this.values();
-            this.setState({ errors, values, isValid: !errors.totalErrors });
+            this.setState({ errors, values, isValid: !errors.totalErrors, submited: true });
         }
 
         getErrors = elementName => (this.state.errors[elementName] || []);
@@ -29,7 +33,8 @@ export const formWrapper = (WrappedComponent) => {
                 clear: this.clear,
                 setValues: this.setValues,
                 setFields: this.setElements,
-                getErrors: this.getErrors
+                getErrors: this.getErrors,
+                validationWriteWithoutSubmit: this.validationWrite
             }
         }
   
@@ -39,11 +44,12 @@ export const formWrapper = (WrappedComponent) => {
 
 
         /** Form functions */
-        checkErrors = () => {
+        checkErrors = state => {
+            state = state || this.state;
             let _errors = {
                 totalErrors: 0
             }
-            Object.keys(this.state.elements).forEach(e => {
+            Object.keys(state.elements).forEach(e => {
                 const elementErrors = this.formElementValid(e);
                 if (elementErrors) {
                     _errors[e] = elementErrors;
@@ -91,17 +97,42 @@ export const formWrapper = (WrappedComponent) => {
 
         /** Element functions */
         createFormElement(name, {defaultValue, validators}) {
-            return { defaultValue, validators, value: defaultValue || "", onChange: e => this.formElementOnChange(e, name) };
+            return { defaultValue, validators, value: defaultValue, onChange: e => this.formElementOnChange(e, name) };
         }
 
         formElementValid = elementName => {
             let element = this.readFormElement(elementName);
-            return element.validators.map(validator => validator.exec(element.value, this.state.elements)).filter(res => !!res);
+            const responseValidations = element.validators.map(validator => validator.exec(element.value, this.state.elements));
+            return responseValidations.filter(res => !!res);
         }
 
         formElementOnChange = (e, elementName) => {
             let element = this.readFormElement(elementName);
-            element.value = e.target.value;
+            let value = null;
+            switch(e.target.type) {
+                case "radio":
+                    if (/(\[\])$/.test(e.target.name)) {
+                        value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(e => !!e);
+                        const index = value.indexOf(e.target.value);
+                        index === -1 ? value.push(e.target.value) : value.splice(index,1);
+                    } else {
+                        value = e.target.value;
+                    }
+                    break;
+                case "checkbox":
+                    if (/(\[\])$/.test(e.target.name)) {
+                        value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(e => !!e);
+                        const index = value.indexOf(e.target.value);
+                        index === -1 ? value.push(e.target.value) : value.splice(index,1);
+                    } else {
+                        value = e.target.checked;
+                    }
+                    break;
+                default:
+                    value = e.target.value;
+                    break;
+            }
+            element.value = value;
             this.saveFormElement(elementName, element);
         }
 
@@ -110,7 +141,16 @@ export const formWrapper = (WrappedComponent) => {
         saveFormElement = (elementName, data) => {
             let elements = this.state.elements;
             delete elements[elementName];
-            this.setState({ elements: {...elements, [elementName]: data }});
+            
+            this.setState({ elements: {...elements, [elementName]: data }}, () => {
+                // Get and set error errors
+                if (this.state.isValidationWrite || this.state.submited) {
+                    const errors = this.state.errors;
+                    errors[elementName] = this.formElementValid(elementName);
+                    this.setState({ errors });
+                }
+            });
+            
         }
     };
 }
