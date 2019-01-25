@@ -63,27 +63,27 @@ export class CompleteFormComponent extends React.Component {
         (<div>
             <form onSubmit={form.submit}>
                 Name: 
-                <input type="text" value={form.elements.name.value} onChange={form.elements.name.onChange} />
+                <input type="text" {...form.getInput("name")} />
                 <br />
                 {form.getErrors("name").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 
                 <br />
                 <br />
                 Email:
-                <input type="text" value={form.elements.email.value} onChange={form.elements.email.onChange} />
+                <input type="text" {...form.getInput("email")} />
                 <br />
                 {form.getErrors("email").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 
                 <br />
                 Repeat email:
-                <input type="text" value={form.elements.repeatEmail.value} onChange={form.elements.repeatEmail.onChange} />
+                <input type="text" {...form.getInput("repeatEmail")} />
                 <br />
                 {form.getErrors("repeatEmail").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 
                 <br />
 
                 Condiciones de privacidad:
-                <input type="checkbox" checked={form.elements.policyPrivacy.value} value={form.elements.policyPrivacy.value} onChange={form.elements.policyPrivacy.onChange} />
+                <input type="checkbox" {...form.getInputCheck("policyPrivacy")}/>
                 <br />
                 {form.getErrors("policyPrivacy").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
 
@@ -92,20 +92,20 @@ export class CompleteFormComponent extends React.Component {
                 <br />
 
                 Genero:
-                <input type="radio" name="drone" value="x" checked={form.elements.gender.value === "x"} onChange={form.elements.gender.onChange} />
+                <input type="radio" {...form.getInputCheck("gender", "x")} />
                 <label>x</label>
-                <input type="radio" name="drone" value="y" checked={form.elements.gender.value === "y"} onChange={form.elements.gender.onChange}/>
+                <input type="radio" {...form.getInputCheck("gender", "y")}/>
                 <label>y</label>
                 {form.getErrors("gender").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />
 
 
                 Tipos de peliculas:
-                <input type="checkbox" name="films[]" value="film1" checked={form.elements.films.value && form.elements.films.value.indexOf("film1") > -1 } onChange={form.elements.films.onChange} />
+                <input type="checkbox" {...form.getInputCheckMulti("films", "film1")} />
                 <label>film1</label>
-                <input type="checkbox" name="films[]" value="film2" checked={form.elements.films.value && form.elements.films.value.indexOf("film2") > -1 } onChange={form.elements.films.onChange} />
+                <input type="checkbox" {...form.getInputCheckMulti("films", "film2")} />
                 <label>film2</label>
-                <input type="checkbox" name="films[]" value="film3" checked={form.elements.films.value && form.elements.films.value.indexOf("film3") > -1 } onChange={form.elements.films.onChange}/>
+                <input type="checkbox" {...form.getInputCheckMulti("films", "film3")} />
                 <label>film3</label>
                 {form.getErrors("films").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />

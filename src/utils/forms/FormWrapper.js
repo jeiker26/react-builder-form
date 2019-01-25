@@ -25,6 +25,8 @@ export const formWrapper = (WrappedComponent) => {
         }
 
         getErrors = elementName => (this.state.errors[elementName] || []);
+        getValue = elementName => this.state.elements[elementName].value;
+        getOnChange = elementName => this.state.elements[elementName].onChange;
 
         interfaceform = () => {
             return {
@@ -34,6 +36,23 @@ export const formWrapper = (WrappedComponent) => {
                 setValues: this.setValues,
                 setFields: this.setElements,
                 getErrors: this.getErrors,
+                getInput: fieldName => { return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) }; },
+                getInputCheck: (fieldName, value) => { 
+                    return { 
+                        onChange: this.getOnChange(fieldName), 
+                        checked: value ? this.getValue(fieldName) === value : this.getValue(fieldName), 
+                        value: value || this.getValue(fieldName),
+                        name: fieldName
+                    }; 
+                },
+                getInputCheckMulti: (fieldName, value) => { 
+                    return { 
+                        onChange: this.getOnChange(fieldName), 
+                        checked: this.getValue(fieldName) && this.getValue(fieldName).indexOf(value) > -1 ,
+                        value,
+                        name: `${fieldName}[]`
+                    }; 
+                },
                 validationWriteWithoutSubmit: this.validationWrite
             }
         }
