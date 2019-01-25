@@ -87,11 +87,11 @@ export const BasicForm = formWrapper(BasicFormComponent);
 | `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValid`.
 | `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
 | `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
+| `getInput()` | `nameField` | Get input attributes.
 
 #### Render props
 | prop | types | default value | description |
 |--|--|--|--|
-| `elements` | `{ defaultValue: string, validators: Validators[]}` | `null` | Form elements. |
 | `errors` | `{ elementKey: String[], ... }` | `{}` | Errors by fields. |
 | `values` | `{ element: String, ... }` | `{}` | Values by fields. |
 | `isValid` | `boolean` | `false`| All fields comply with their validations. After `submit()`. |

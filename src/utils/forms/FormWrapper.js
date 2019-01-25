@@ -37,15 +37,23 @@ export const formWrapper = (WrappedComponent) => {
                 setFields: this.setElements,
                 getErrors: this.getErrors,
                 getInput: fieldName => { return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) }; },
-                getInputCheck: (fieldName, value) => { 
+                getCheckbox: fieldName => { 
                     return { 
                         onChange: this.getOnChange(fieldName), 
-                        checked: value ? this.getValue(fieldName) === value : this.getValue(fieldName), 
-                        value: value || this.getValue(fieldName),
+                        checked: this.getValue(fieldName), 
+                        value: this.getValue(fieldName),
                         name: fieldName
                     }; 
                 },
-                getInputCheckMulti: (fieldName, value) => { 
+                getRadio: (fieldName, value) => { 
+                    return { 
+                        onChange: this.getOnChange(fieldName), 
+                        checked: this.getValue(fieldName) === value,
+                        value,
+                        name: fieldName
+                    }; 
+                },
+                getCheckboxMulti: (fieldName, value) => { 
                     return { 
                         onChange: this.getOnChange(fieldName), 
                         checked: this.getValue(fieldName) && this.getValue(fieldName).indexOf(value) > -1 ,

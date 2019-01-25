@@ -83,7 +83,7 @@ export class CompleteFormComponent extends React.Component {
                 <br />
 
                 Condiciones de privacidad:
-                <input type="checkbox" {...form.getInputCheck("policyPrivacy")}/>
+                <input type="checkbox" {...form.getCheckbox("policyPrivacy")}/>
                 <br />
                 {form.getErrors("policyPrivacy").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
 
@@ -92,20 +92,20 @@ export class CompleteFormComponent extends React.Component {
                 <br />
 
                 Genero:
-                <input type="radio" {...form.getInputCheck("gender", "x")} />
+                <input type="radio" {...form.getRadio("gender", "x")} />
                 <label>x</label>
-                <input type="radio" {...form.getInputCheck("gender", "y")}/>
+                <input type="radio" {...form.getRadio("gender", "y")} />
                 <label>y</label>
                 {form.getErrors("gender").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />
 
 
                 Tipos de peliculas:
-                <input type="checkbox" {...form.getInputCheckMulti("films", "film1")} />
+                <input type="checkbox" {...form.getCheckboxMulti("films", "film1")} />
                 <label>film1</label>
-                <input type="checkbox" {...form.getInputCheckMulti("films", "film2")} />
+                <input type="checkbox" {...form.getCheckboxMulti("films", "film2")} />
                 <label>film2</label>
-                <input type="checkbox" {...form.getInputCheckMulti("films", "film3")} />
+                <input type="checkbox" {...form.getCheckboxMulti("films", "film3")} />
                 <label>film3</label>
                 {form.getErrors("films").map(e => (<span key={e} style={{color: "red"}}>{e}</span>))}
                 <br />
