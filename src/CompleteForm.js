@@ -48,7 +48,6 @@ export class CompleteFormComponent extends React.Component {
 
     render() {
         const { form } = this.props;
-        console.log(form);
         return form.loading ?  
             (<p>Loading...</p>)
         : 
