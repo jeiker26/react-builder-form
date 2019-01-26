@@ -1,4 +1,4 @@
-import { Validator } from "./../forms/forms";
+import { Validator } from "../forms/Validator";
 
 export const minstringvalidator = new Validator((value) => {
     const error = "El elemento debe tener más de 3 caracteres."
@@ -65,14 +65,3 @@ export const checkIfTrue = new Validator(value => {
     }
     return error;
 });
-
-export const isRequired = new Validator((value, formElements) => {
-    const error = "Campo requerido";
-    if (value) {
-        if (Array.isArray(value) && !value.length) {
-            return error;
-        }
-       return false;
-    } 
-    return error;
-})

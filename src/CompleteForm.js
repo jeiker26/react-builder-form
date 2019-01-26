@@ -1,6 +1,7 @@
 import React from "react";
 import { formWrapper } from "./utils/forms/FormWrapper";
-import { minstringvalidator, maxstringvalidator, emailValidator, equalValidatorEmail, checkIfTrue, isRequired } from "./utils/validators/validators";
+import { isRequired } from "./utils/forms/Validator";
+import { minstringvalidator, maxstringvalidator, emailValidator, equalValidatorEmail } from "./utils/validators/validators";
 
 export class CompleteFormComponent extends React.Component {
     componentDidMount() {
@@ -55,7 +56,8 @@ export class CompleteFormComponent extends React.Component {
             email: "jesusgrads@mmm.es", 
             policyPrivacy: true, 
             gender: "y", 
-            films: ["film2"]
+            films: ["film2"],
+            car: "mercedes"
         });
     }
 

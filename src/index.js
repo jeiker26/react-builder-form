@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./App";
+import { CompleteForm } from "./CompleteForm";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<CompleteForm />, document.getElementById("root"));
 
