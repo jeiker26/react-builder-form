@@ -213,14 +213,14 @@ export const formWrapper = WrappedComponent => {
 
     saveFormElement = (elementName, data) => {
       let elements = this.state.elements;
+      const errors = this.state.errors;
       delete elements[elementName];
 
       this.setState(
         { elements: { ...elements, [elementName]: data }, submited: false, isValid: false },
-        state => {
+        () => {
           // Get and set error errors
-          if (state.isValidationWrite) {
-            const errors = state.errors;
+          if (this.state.isValidationWrite) {
             errors[elementName] = this.formElementValid(elementName);
             this.setState({ errors });
           }
