@@ -4,7 +4,7 @@ import { transformFalseValue } from "./utils";
 const INPUTS_TYPES = {
   radio: "radio",
   checkbox: "checkbox",
-  checkboxMulti: "checkboxMulti",
+  checkboxMulti: "checkboxMulti"
 };
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
   values: {},
   isValid: false,
   loading: true,
-  submited: false,
+  submited: false
 };
 
 export const formWrapper = WrappedComponent => {
@@ -22,7 +22,7 @@ export const formWrapper = WrappedComponent => {
       this.state = {
         elements: null,
         isValidationWrite: false,
-        ...initialState,
+        ...initialState
       };
     }
 
@@ -77,7 +77,7 @@ export const formWrapper = WrappedComponent => {
         getRadio: (fieldName, value) => this.getCheckbox(INPUTS_TYPES.radio, fieldName, value),
         getCheckboxMulti: (fieldName, value) =>
           this.getCheckbox(INPUTS_TYPES.checkboxMulti, fieldName, value),
-        validationWriteWithoutSubmit: this.validationWrite,
+        validationWriteWithoutSubmit: this.validationWrite
       };
     };
 
@@ -101,14 +101,14 @@ export const formWrapper = WrappedComponent => {
         values,
         isValid: !errors.totalErrors,
         submited: true,
-        isValidationWrite: true,
+        isValidationWrite: true
       });
     };
 
     checkErrors = state => {
       state = state || this.state;
       let _errors = {
-        totalErrors: 0,
+        totalErrors: 0
       };
       Object.keys(state.elements).forEach(e => {
         const elementErrors = this.formElementValid(e); //deepClone
@@ -134,7 +134,7 @@ export const formWrapper = WrappedComponent => {
       Object.keys(this.state.elements).forEach(e => {
         clearElementsObject[e] = {
           ...this.state.elements[e], // deepClone
-          value: transformFalseValue(this.state.elements[e].value),
+          value: transformFalseValue(this.state.elements[e].value)
         };
       });
 
@@ -143,7 +143,7 @@ export const formWrapper = WrappedComponent => {
         values: {},
         isValid: false,
         submited: false,
-        elements: clearElementsObject,
+        elements: clearElementsObject
       });
     };
 
@@ -152,7 +152,7 @@ export const formWrapper = WrappedComponent => {
       Object.keys(this.state.elements).forEach(e => {
         elementsWithValues[e] = {
           ...this.state.elements[e], // deepClone
-          value: values[e] || transformFalseValue(this.state.elements[e].value),
+          value: values[e] || transformFalseValue(this.state.elements[e].value)
         };
       });
 
@@ -161,7 +161,7 @@ export const formWrapper = WrappedComponent => {
         values: {},
         isValid: false,
         submited: false,
-        elements: elementsWithValues,
+        elements: elementsWithValues
       });
     };
 
@@ -179,14 +179,14 @@ export const formWrapper = WrappedComponent => {
         defaultValue,
         validators,
         value: defaultValue,
-        onChange: e => this.formElementOnChange(e, name),
+        onChange: e => this.formElementOnChange(e, name)
       };
     }
 
     formElementValid = elementName => {
       let element = this.getFormField(elementName);
       const responseValidations = element.validators.map(validator =>
-        validator.exec(element.value, this.state.elements),
+        validator.exec(element.value, this.state.elements)
       );
       return responseValidations.filter(res => !!res);
     };
@@ -198,7 +198,7 @@ export const formWrapper = WrappedComponent => {
         case "radio":
           if (/(\[\])$/.test(e.target.name)) {
             value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(
-              e => !!e,
+              e => !!e
             );
             const index = value.indexOf(e.target.value);
             index === -1 ? value.push(e.target.value) : value.splice(index, 1);
@@ -209,7 +209,7 @@ export const formWrapper = WrappedComponent => {
         case "checkbox":
           if (/(\[\])$/.test(e.target.name)) {
             value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(
-              e => !!e,
+              e => !!e
             );
             const index = value.indexOf(e.target.value);
             index === -1 ? value.push(e.target.value) : value.splice(index, 1);
@@ -238,7 +238,7 @@ export const formWrapper = WrappedComponent => {
             errors[elementName] = this.formElementValid(elementName);
             this.setState({ errors });
           }
-        },
+        }
       );
     };
 

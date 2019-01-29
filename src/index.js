@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { CompleteForm } from "./CompleteForm";
+import { FormWrapper } from "./forms/FormWrapper";
+import { Validator, isRequired } from "./forms/Validator";
 
-ReactDOM.render(<CompleteForm />, document.getElementById("root"));
+export { FormWrapper, Validator, isRequired };
