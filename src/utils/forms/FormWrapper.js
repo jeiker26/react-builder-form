@@ -1,4 +1,19 @@
 import React from "react";
+import { transformFalseValue } from "./utils";
+
+const INPUTS_TYPES = {
+  radio: "radio",
+  checkbox: "checkbox",
+  checkboxMulti: "checkboxMulti",
+};
+
+const initialState = {
+  errors: {},
+  values: {},
+  isValid: false,
+  loading: true,
+  submited: false,
+};
 
 export const formWrapper = WrappedComponent => {
   return class FormWrapper extends React.Component {
@@ -6,17 +21,77 @@ export const formWrapper = WrappedComponent => {
       super(props);
       this.state = {
         elements: null,
-        errors: {},
-        values: {},
-        isValid: false,
-        loading: true,
         isValidationWrite: false,
-        submited: false,
+        ...initialState,
       };
     }
 
+    /** Options/configuration */
     validationWrite = value => this.setState({ isValidationWrite: value });
 
+    /** End Options/configuration */
+
+    /** Public Interface */
+    getErrors = elementName => this.state.errors[elementName] || [];
+
+    getInput = (type = "input", fieldName, value = false) => {
+      const field = this.getFormField(fieldName);
+      const iField = {};
+      switch (type) {
+        case INPUTS_TYPES.radio:
+          iField.checked = field.value === value;
+          iField.value = value;
+          iField.name = fieldName;
+          break;
+        case INPUTS_TYPES.checkbox:
+          iField.checked = field.value;
+          iField.value = field.value;
+          iField.name = fieldName;
+          break;
+        case INPUTS_TYPES.checkboxMulti:
+          iField.checked = field.value && field.value.indexOf(value) > -1;
+          iField.value = value;
+          iField.name = `${fieldName}[]`;
+          break;
+        default:
+          iField.value = field.value;
+          break;
+      }
+
+      iField.onChange = field.onChange;
+
+      return iField;
+    };
+
+    interfaceform = () => {
+      return {
+        ...this.state,
+        submit: this.compile,
+        clear: this.clear,
+        setValues: this.setValues,
+        setFields: this.setElements,
+        getErrors: this.getErrors,
+        getInput: this.getInput,
+        getSelect: this.getInput,
+        getCheckbox: fieldName => this.getCheckbox(INPUTS_TYPES.checkbox, fieldName),
+        getRadio: (fieldName, value) => this.getCheckbox(INPUTS_TYPES.radio, fieldName, value),
+        getCheckboxMulti: (fieldName, value) =>
+          this.getCheckbox(INPUTS_TYPES.checkboxMulti, fieldName, value),
+        validationWriteWithoutSubmit: this.validationWrite,
+      };
+    };
+
+    /** End Public Interface */
+
+    /** Form functions
+     * 1 - Utils
+     * 2 - Core Form
+     * 3 - Core FormField
+     */
+    /* 1 - Utils */
+    getFormField = elementName => this.state.elements[elementName];
+
+    /* 2 - Core Form */
     compile = e => {
       e.preventDefault();
       const errors = this.checkErrors();
@@ -30,60 +105,13 @@ export const formWrapper = WrappedComponent => {
       });
     };
 
-    getErrors = elementName => this.state.errors[elementName] || [];
-    getValue = elementName => this.state.elements[elementName].value;
-    getOnChange = elementName => this.state.elements[elementName].onChange;
-
-    interfaceform = () => {
-      return {
-        ...this.state,
-        submit: this.compile,
-        clear: this.clear,
-        setValues: this.setValues,
-        setFields: this.setElements,
-        getErrors: this.getErrors,
-        getInput: fieldName => {
-          return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) };
-        },
-        getSelect: fieldName => {
-          return { onChange: this.getOnChange(fieldName), value: this.getValue(fieldName) };
-        },
-        getCheckbox: fieldName => {
-          return {
-            onChange: this.getOnChange(fieldName),
-            checked: this.getValue(fieldName),
-            value: this.getValue(fieldName),
-            name: fieldName,
-          };
-        },
-        getRadio: (fieldName, value) => {
-          return {
-            onChange: this.getOnChange(fieldName),
-            checked: this.getValue(fieldName) === value,
-            value,
-            name: fieldName,
-          };
-        },
-        getCheckboxMulti: (fieldName, value) => {
-          return {
-            onChange: this.getOnChange(fieldName),
-            checked: this.getValue(fieldName) && this.getValue(fieldName).indexOf(value) > -1,
-            value,
-            name: `${fieldName}[]`,
-          };
-        },
-        validationWriteWithoutSubmit: this.validationWrite,
-      };
-    };
-
-    /** Form functions */
     checkErrors = state => {
       state = state || this.state;
       let _errors = {
         totalErrors: 0,
       };
       Object.keys(state.elements).forEach(e => {
-        const elementErrors = this.formElementValid(e);
+        const elementErrors = this.formElementValid(e); //deepClone
         if (elementErrors) {
           _errors[e] = elementErrors;
           _errors.totalErrors += elementErrors.length;
@@ -96,7 +124,7 @@ export const formWrapper = WrappedComponent => {
     values = () => {
       const _values = {};
       Object.keys(this.state.elements).forEach(e => {
-        _values[e] = this.state.elements[e].value;
+        _values[e] = this.state.elements[e].value; // deepClone
       });
       return _values;
     };
@@ -105,8 +133,8 @@ export const formWrapper = WrappedComponent => {
       const clearElementsObject = {};
       Object.keys(this.state.elements).forEach(e => {
         clearElementsObject[e] = {
-          ...this.state.elements[e],
-          value: this.transformFalseValue(this.state.elements[e].value),
+          ...this.state.elements[e], // deepClone
+          value: transformFalseValue(this.state.elements[e].value),
         };
       });
 
@@ -119,24 +147,12 @@ export const formWrapper = WrappedComponent => {
       });
     };
 
-    transformFalseValue = value => {
-      if (Array.isArray(value)) {
-        return [];
-      }
-
-      if (typeof value === "boolean") {
-        return false;
-      }
-
-      return "";
-    };
-
     setValues = values => {
       const elementsWithValues = {};
       Object.keys(this.state.elements).forEach(e => {
         elementsWithValues[e] = {
-          ...this.state.elements[e],
-          value: values[e] || this.transformFalseValue(this.state.elements[e].value),
+          ...this.state.elements[e], // deepClone
+          value: values[e] || transformFalseValue(this.state.elements[e].value),
         };
       });
 
@@ -154,10 +170,10 @@ export const formWrapper = WrappedComponent => {
       Object.keys(elements).forEach(e => {
         elementsTransform[e] = this.createFormElement(e, elements[e]);
       });
-      this.setState({ elements: elementsTransform, loading: false });
+      this.setState({ elements: elementsTransform, ...initialState, loading: false });
     };
 
-    /** Element functions */
+    /* 3 - Core FormField */
     createFormElement(name, { defaultValue, validators }) {
       return {
         defaultValue,
@@ -168,7 +184,7 @@ export const formWrapper = WrappedComponent => {
     }
 
     formElementValid = elementName => {
-      let element = this.readFormElement(elementName);
+      let element = this.getFormField(elementName);
       const responseValidations = element.validators.map(validator =>
         validator.exec(element.value, this.state.elements),
       );
@@ -176,7 +192,7 @@ export const formWrapper = WrappedComponent => {
     };
 
     formElementOnChange = (e, elementName) => {
-      let element = this.readFormElement(elementName);
+      let element = this.getFormField(elementName); // deepClone
       let value = null;
       switch (e.target.type) {
         case "radio":
@@ -209,11 +225,9 @@ export const formWrapper = WrappedComponent => {
       this.saveFormElement(elementName, element);
     };
 
-    readFormElement = elementName => this.state.elements[elementName];
-
     saveFormElement = (elementName, data) => {
-      let elements = this.state.elements;
-      const errors = this.state.errors;
+      let elements = this.state.elements; // deepClone
+      let errors = this.state.errors; // deepClone
       delete elements[elementName];
 
       this.setState(
@@ -227,6 +241,8 @@ export const formWrapper = WrappedComponent => {
         },
       );
     };
+
+    /** End Form functions */
 
     render() {
       return <WrappedComponent form={this.interfaceform()} {...this.props} />;
