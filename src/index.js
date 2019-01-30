@@ -1,4 +1,4 @@
-import { FormWrapper } from "./forms/FormWrapper";
+import { formWrapper } from "./forms/FormWrapper";
 import { Validator, isRequired } from "./forms/Validator";
 
-export { FormWrapper, Validator, isRequired };
+export { formWrapper, Validator, isRequired };

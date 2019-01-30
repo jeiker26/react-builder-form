@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formWrapper } from "./utils/forms/FormWrapper";
-import { isRequired } from "./utils/forms/Validator";
+import { formWrapper, isRequired } from "../../dist/react-form-builder";
+
 import {
   minstringvalidator,
   maxstringvalidator,

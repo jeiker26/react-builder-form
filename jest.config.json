@@ -1,8 +1,10 @@
 {
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "src/**/*.js",
-    "!src/**/index.js"
+    "<rootDir>/src/**/*.{js,jsx}",
+    "!<rootDir>/src/setupTests.js",
+    "!<rootDir>/src/**/index.js",
+    "!<rootDir>/node_modules/"
   ],
   "coverageDirectory": "coverage",
   "coverageThreshold": {
@@ -20,7 +22,7 @@
   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
   "testURL": "http://localhost",
   "transform": {
-    "^.+\\.js$": "babel-jest"
+    "^.+\\.(js|jsx)?$": "babel-jest"
   },
-  "verbose": true
+  "verbose": false
 }
