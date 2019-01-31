@@ -1,14 +1,19 @@
+const loose = true;
+
 module.exports = {
-  plugins: [["@babel/plugin-proposal-class-properties", { loose: true }]],
   presets: [
     [
       "@babel/preset-env",
       {
-        targets: {
-          node: "current",
-        },
-      },
+        loose,
+        modules: false
+      }
     ],
-    ["@babel/preset-react"],
+    "@babel/preset-react"
   ],
+  plugins: [
+    ["@babel/proposal-class-properties", { loose }],
+    ["@babel/proposal-object-rest-spread", { loose }],
+    ["transform-react-remove-prop-types", { mode: "unsafe-wrap" }]
+  ]
 };

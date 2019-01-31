@@ -1,4 +1,4 @@
-import { Validator } from "../forms/Validator";
+import { Validator } from "../../src/forms/Validator";
 
 export const minstringvalidator = new Validator(value => {
   const error = "El elemento debe tener más de 3 caracteres.";

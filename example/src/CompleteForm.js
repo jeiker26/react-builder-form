@@ -1,49 +1,61 @@
 import React from "react";
-import { formWrapper } from "./utils/forms/FormWrapper";
-import { isRequired } from "./utils/forms/Validator";
+import PropTypes from "prop-types";
+import { formWrapper } from "../../src/forms/FormWrapper";
+import { isRequired } from "../../src/forms/Validator";
+
 import {
   minstringvalidator,
   maxstringvalidator,
   emailValidator,
-  equalValidatorEmail,
-} from "./utils/validators/validators";
+  equalValidatorEmail
+} from "./validators";
 
 export class CompleteFormComponent extends React.Component {
+  static propTypes = {
+    form: PropTypes.shape({
+      setFields: PropTypes.func,
+      setValues: PropTypes.func,
+      isValid: PropTypes.bool,
+      values: PropTypes.any,
+      clear: PropTypes.func
+    })
+  };
+
   componentDidMount() {
     // this.props.form.validationWriteWithoutSubmit(true);
     this.props.form.setFields({
       name: {
         defaultValue: "asdasd",
-        validators: [minstringvalidator, maxstringvalidator, isRequired],
+        validators: [minstringvalidator, maxstringvalidator, isRequired]
       },
       age: {
         defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
-        validators: [isRequired],
+        validators: [isRequired]
       },
       email: {
         defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [emailValidator, isRequired],
+        validators: [emailValidator, isRequired]
       },
       repeatEmail: {
         defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [equalValidatorEmail, isRequired],
+        validators: [equalValidatorEmail, isRequired]
       },
       policyPrivacy: {
         defaultValue: true,
-        validators: [isRequired],
+        validators: [isRequired]
       },
       gender: {
         defaultValue: "x",
-        validators: [isRequired],
+        validators: [isRequired]
       },
       films: {
         defaultValue: ["film1", "film3"],
-        validators: [isRequired],
+        validators: [isRequired]
       },
       car: {
         defaultValue: "audi",
-        validators: [isRequired],
-      },
+        validators: [isRequired]
+      }
     });
   }
 
@@ -67,7 +79,7 @@ export class CompleteFormComponent extends React.Component {
       policyPrivacy: true,
       gender: "y",
       films: ["film2"],
-      car: "mercedes",
+      car: "mercedes"
     });
   };
 
