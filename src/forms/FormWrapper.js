@@ -4,7 +4,8 @@ import { transformFalseValue } from "./utils";
 const INPUTS_TYPES = {
   radio: "radio",
   checkbox: "checkbox",
-  checkboxMulti: "checkboxMulti"
+  checkboxMulti: "checkboxMulti",
+  input: "input"
 };
 
 const initialState = {
@@ -71,12 +72,12 @@ export const formWrapper = WrappedComponent => {
         setValues: this.setValues,
         setFields: this.setElements,
         getErrors: this.getErrors,
-        getInput: this.getInput,
-        getSelect: this.getInput,
-        getCheckbox: fieldName => this.getCheckbox(INPUTS_TYPES.checkbox, fieldName),
-        getRadio: (fieldName, value) => this.getCheckbox(INPUTS_TYPES.radio, fieldName, value),
+        getInput: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
+        getSelect: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
+        getCheckbox: fieldName => this.getInput(INPUTS_TYPES.checkbox, fieldName),
+        getRadio: (fieldName, value) => this.getInput(INPUTS_TYPES.radio, fieldName, value),
         getCheckboxMulti: (fieldName, value) =>
-          this.getCheckbox(INPUTS_TYPES.checkboxMulti, fieldName, value),
+          this.getInput(INPUTS_TYPES.checkboxMulti, fieldName, value),
         validationWriteWithoutSubmit: this.validationWrite
       };
     };

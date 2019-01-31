@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formWrapper, isRequired } from "../../dist/react-form-builder";
+import { formWrapper } from "../../src/forms/FormWrapper";
+import { isRequired } from "../../src/forms/Validator";
 
 import {
   minstringvalidator,
   maxstringvalidator,
   emailValidator,
   equalValidatorEmail
-} from "./utils/validators/validators";
+} from "./validators";
 
 export class CompleteFormComponent extends React.Component {
   static propTypes = {

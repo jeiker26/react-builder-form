@@ -2032,34 +2032,36 @@
 
           var field = _this.getFormField(fieldName);
 
-          var iField = {};
+          if (field) {
+            var iField = {};
 
-          switch (type) {
-            case INPUTS_TYPES.radio:
-              iField.checked = field.value === value;
-              iField.value = value;
-              iField.name = fieldName;
-              break;
+            switch (type) {
+              case INPUTS_TYPES.radio:
+                iField.checked = field.value === value;
+                iField.value = value;
+                iField.name = fieldName;
+                break;
 
-            case INPUTS_TYPES.checkbox:
-              iField.checked = field.value;
-              iField.value = field.value;
-              iField.name = fieldName;
-              break;
+              case INPUTS_TYPES.checkbox:
+                iField.checked = field.value;
+                iField.value = field.value;
+                iField.name = fieldName;
+                break;
 
-            case INPUTS_TYPES.checkboxMulti:
-              iField.checked = field.value && field.value.indexOf(value) > -1;
-              iField.value = value;
-              iField.name = fieldName + "[]";
-              break;
+              case INPUTS_TYPES.checkboxMulti:
+                iField.checked = field.value && field.value.indexOf(value) > -1;
+                iField.value = value;
+                iField.name = fieldName + "[]";
+                break;
 
-            default:
-              iField.value = field.value;
-              break;
+              default:
+                iField.value = field.value;
+                break;
+            }
+
+            iField.onChange = field.onChange;
+            return iField;
           }
-
-          iField.onChange = field.onChange;
-          return iField;
         };
 
         _this.interfaceform = function () {
@@ -2072,13 +2074,13 @@
             getInput: _this.getInput,
             getSelect: _this.getInput,
             getCheckbox: function getCheckbox(fieldName) {
-              return _this.getCheckbox(INPUTS_TYPES.checkbox, fieldName);
+              return _this.getInput(INPUTS_TYPES.checkbox, fieldName);
             },
             getRadio: function getRadio(fieldName, value) {
-              return _this.getCheckbox(INPUTS_TYPES.radio, fieldName, value);
+              return _this.getInput(INPUTS_TYPES.radio, fieldName, value);
             },
             getCheckboxMulti: function getCheckboxMulti(fieldName, value) {
-              return _this.getCheckbox(INPUTS_TYPES.checkboxMulti, fieldName, value);
+              return _this.getInput(INPUTS_TYPES.checkboxMulti, fieldName, value);
             },
             validationWriteWithoutSubmit: _this.validationWrite
           });

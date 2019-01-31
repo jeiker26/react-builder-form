@@ -3,13 +3,13 @@ const loose = true;
 module.exports = {
   presets: [
     [
-      "@babel/env",
+      "@babel/preset-env",
       {
         loose,
         modules: false
       }
     ],
-    "@babel/react"
+    "@babel/preset-react"
   ],
   plugins: [
     ["@babel/proposal-class-properties", { loose }],
