@@ -23,7 +23,7 @@
     "lint": "eslint src",
     "prepare": "npm run prebuild && npm run build",
     "test": "BABEL_ENV=test jest  --watchAll --config --no-cache ./jest.config.json",
-    "test:watch": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
+    "test:coverage": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
     "start:example": "webpack-dev-server --config ./webpack.config.js --mode development"
   },
   "peerDependencies": {
