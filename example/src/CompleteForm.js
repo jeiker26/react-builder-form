@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formWrapper } from "../../src/forms/FormWrapper";
 import { isRequired } from "../../src/forms/Validator";
-
 import {
-  minstringvalidator,
-  maxstringvalidator,
   emailValidator,
-  equalValidatorEmail
+  equalValidatorEmail,
+  maxstringvalidator,
+  minstringvalidator
 } from "./validators";
 
 export class CompleteFormComponent extends React.Component {

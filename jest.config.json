@@ -16,13 +16,12 @@
     }
   },
   "notify": true,
-  "roots": [
-    "<rootDir>/src"
-  ],
+  "roots": ["<rootDir>/src"],
   "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
   "testURL": "http://localhost",
   "transform": {
     "^.+\\.(js|jsx)?$": "babel-jest"
   },
-  "verbose": false
+  "verbose": false,
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"]
 }
