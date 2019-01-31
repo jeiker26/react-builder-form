@@ -1,4 +1,6 @@
+import { isRequired } from "./Validator";
+
 test("isRequired suite", () => {
   // should return false
-  expect(true).toBe(true);
+  expect(isRequired).toBe(true);
 });

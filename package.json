@@ -22,8 +22,8 @@
     "clean": "rimraf dist",
     "lint": "eslint src",
     "prepare": "npm run prebuild && npm run build",
-    "test": "jest  --watchAll --config --no-cache ./jest.config.json",
-    "test:watch": "jest --watchAll --coverage --no-cache --config ./jest.config.json",
+    "test": "BABEL_ENV=test jest  --watchAll --config --no-cache ./jest.config.json",
+    "test:watch": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
     "start:example": "webpack-dev-server --config ./webpack.config.js --mode development"
   },
   "peerDependencies": {
@@ -35,6 +35,7 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
