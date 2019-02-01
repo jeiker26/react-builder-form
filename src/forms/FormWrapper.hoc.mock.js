@@ -1,8 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { formWrapper } from "./FormWrapper";
-import { Validator } from "./Validator";
+import { Validator, isRequired } from "./Validator";
 
+export const FIELDS_MOCKS = {
+  name: {
+    defaultValue: "asdasd",
+    validators: [minstringvalidator, maxstringvalidator, isRequired]
+  },
+  age: {
+    defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
+    validators: [isRequired]
+  },
+  email: {
+    defaultValue: "jesus-aaaaaa@gml.c",
+    validators: [emailValidator, isRequired]
+  },
+  repeatEmail: {
+    defaultValue: "jesus-aaaaaa@gml.c",
+    validators: [equalValidatorEmail, isRequired]
+  },
+  policyPrivacy: {
+    defaultValue: true,
+    validators: [isRequired]
+  },
+  gender: {
+    defaultValue: "x",
+    validators: [isRequired]
+  },
+  films: {
+    defaultValue: ["film1", "film3"],
+    validators: [isRequired]
+  },
+  car: {
+    defaultValue: "audi",
+    validators: [isRequired]
+  }
+};
+
+export const MOCKS_NEW_VALUES = {
+  name: "Jesussss",
+  email: "jesusgrads@mmm.es",
+  age: "1992-04-19",
+  policyPrivacy: true,
+  gender: "y",
+  films: ["film2"],
+  car: "mercedes"
+};
 export class FormMockComponent extends React.Component {
   static propTypes = {
     form: PropTypes.shape({
@@ -15,40 +59,7 @@ export class FormMockComponent extends React.Component {
   };
 
   componentDidMount() {
-    this.props.form.setFields({
-      name: {
-        defaultValue: "asdasd",
-        validators: [minstringvalidator, maxstringvalidator, isRequired]
-      },
-      age: {
-        defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
-        validators: [isRequired]
-      },
-      email: {
-        defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [emailValidator, isRequired]
-      },
-      repeatEmail: {
-        defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [equalValidatorEmail, isRequired]
-      },
-      policyPrivacy: {
-        defaultValue: true,
-        validators: [isRequired]
-      },
-      gender: {
-        defaultValue: "x",
-        validators: [isRequired]
-      },
-      films: {
-        defaultValue: ["film1", "film3"],
-        validators: [isRequired]
-      },
-      car: {
-        defaultValue: "audi",
-        validators: [isRequired]
-      }
-    });
+    this.props.form.setFields(FIELDS_MOCKS);
   }
 
   componentDidUpdate() {
@@ -64,15 +75,7 @@ export class FormMockComponent extends React.Component {
 
   hanleSetValues = e => {
     e.preventDefault();
-    this.props.form.setValues({
-      name: "Jesussss",
-      email: "jesusgrads@mmm.es",
-      age: "1992-04-19",
-      policyPrivacy: true,
-      gender: "y",
-      films: ["film2"],
-      car: "mercedes"
-    });
+    this.props.form.setValues(MOCKS_NEW_VALUES);
   };
 
   render() {
@@ -164,8 +167,12 @@ export class FormMockComponent extends React.Component {
           <br />
           <br />
           <button>Submit</button>
-          <button onClick={this.handleClearForm}>Clear</button>
-          <button onClick={this.hanleSetValues}>SetValues</button>
+          <button id="btn-clear" onClick={this.handleClearForm}>
+            Clear
+          </button>
+          <button id="btn-set-values" onClick={this.hanleSetValues}>
+            SetValues
+          </button>
         </form>
       </div>
     );

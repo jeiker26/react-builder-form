@@ -171,8 +171,12 @@ export class CompleteFormComponent extends React.Component {
           <br />
           <br />
           <button>Submit</button>
-          <button onClick={this.handleClearForm}>Clear</button>
-          <button onClick={this.hanleSetValues}>SetValues</button>
+          <button id="btn-clear" onClick={this.handleClearForm}>
+            Clear
+          </button>
+          <button id="btn-set-values" onClick={this.hanleSetValues}>
+            SetValues
+          </button>
         </form>
       </div>
     );

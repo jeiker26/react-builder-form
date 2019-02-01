@@ -38,27 +38,21 @@ export const formWrapper = WrappedComponent => {
     getInput = (type = "input", fieldName, value = false) => {
       const field = this.getFormField(fieldName);
       const iField = {};
+      iField.name = fieldName;
+      iField.value = field.value;
       switch (type) {
         case INPUTS_TYPES.radio:
           iField.checked = field.value === value;
-          iField.value = value;
-          iField.name = fieldName;
           break;
         case INPUTS_TYPES.checkbox:
           iField.checked = field.value;
-          iField.value = field.value;
-          iField.name = fieldName;
           break;
         case INPUTS_TYPES.checkboxMulti:
           iField.checked = field.value && field.value.indexOf(value) > -1;
           iField.value = value;
           iField.name = `${fieldName}[]`;
           break;
-        default:
-          iField.value = field.value;
-          break;
       }
-
       iField.onChange = field.onChange;
 
       return iField;
@@ -171,7 +165,11 @@ export const formWrapper = WrappedComponent => {
       Object.keys(elements).forEach(e => {
         elementsTransform[e] = this.createFormElement(e, elements[e]);
       });
-      this.setState({ elements: elementsTransform, ...initialState, loading: false });
+      this.setState({
+        elements: elementsTransform,
+        ...initialState,
+        loading: false
+      });
     };
 
     /* 3 - Core FormField */
@@ -232,7 +230,11 @@ export const formWrapper = WrappedComponent => {
       delete elements[elementName];
 
       this.setState(
-        { elements: { ...elements, [elementName]: data }, submited: false, isValid: false },
+        {
+          elements: { ...elements, [elementName]: data },
+          submited: false,
+          isValid: false
+        },
         () => {
           // Get and set error errors
           if (this.state.isValidationWrite) {
