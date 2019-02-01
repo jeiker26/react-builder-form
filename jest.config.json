@@ -17,8 +17,7 @@
   },
   "notify": true,
   "roots": ["<rootDir>/src"],
-  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
-  "testURL": "http://localhost",
+  "setupFiles": ["<rootDir>/enzyme.config.js"],
   "transform": {
     "^.+\\.(js|jsx)?$": "babel-jest"
   },
