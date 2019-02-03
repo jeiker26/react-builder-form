@@ -166,7 +166,7 @@ export class FormMockComponent extends React.Component {
           </select>
           <br />
           <br />
-          <button>Submit</button>
+          <button id="btn-submit">Submit</button>
           <button id="btn-clear" onClick={this.handleClearForm}>
             Clear
           </button>

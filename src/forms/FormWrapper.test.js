@@ -1,6 +1,12 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { FormMock, FIELDS_MOCKS, MOCKS_NEW_VALUES } from "./FormWrapper.hoc.mock";
+import {
+  FormMock,
+  FIELDS_MOCKS,
+  MOCKS_NEW_VALUES,
+  minstringvalidator
+} from "./FormWrapper.hoc.mock";
+import { isRequired } from "./Validator";
 
 describe("FormWrapper suite", () => {
   it("should return loading state", () => {
@@ -110,4 +116,62 @@ describe("FormWrapper suite", () => {
     // select
     expect(wrapper.find(`select[name='car']`).props().value).toEqual("");
   });
+
+  it("should set validationWriteWithoutSubmit a true", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.validationWriteWithoutSubmit(true);
+    expect(wrapper.props().form.isValidationWrite).toBe(true);
+  });
+
+  // check isValid
+  it("should compile form and check if form is valid [no validators]", () => {
+    const event = {
+      preventDefault: () => {}
+    };
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        defaultValue: "foo",
+        validators: []
+      }
+    }); // Set elements
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(true);
+  });
+
+  it("should compile form and check if form is valid with validators, then setField and return check form", () => {
+    const event = {
+      preventDefault: () => {}
+    };
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        validators: [isRequired]
+      }
+    }); // Set elements
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.setValues({ name: "foo" });
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(true);
+  });
+
+  it("should compile form and check if form is valid with validators, then setField and return check form with validationWriteWithoutSubmit", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        defaultValue: "fooVar",
+        validators: [isRequired, minstringvalidator]
+      }
+    }); // Set elements
+    wrapper.props().form.validationWriteWithoutSubmit(true);
+    wrapper.props().form.elements["name"].onChange({ target: { value: "var" } });
+    expect(wrapper.props().form.getErrors("name")).toEqual([
+      "El elemento debe tener más de 3 caracteres."
+    ]);
+  });
+
+  // todo: check errors
 });
