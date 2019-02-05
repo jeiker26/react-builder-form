@@ -27,6 +27,89 @@ With a simple **higher**-**order** component (HOC), you can get:
 ### Installation (In progress NPM package)
 You can install with [NPM](https://npmjs.com/)
 
+### Step 1: Create your component and do the HOC
+```jsx
+export class CompleteFormComponent extends React.Component {
+  ...
+}
+
+export const CompleteForm = formWrapper(CompleteFormComponent);
+```
+
+
+### Step 2: Add the fields of your form in the "componentDidMount"
+```jsx
+  ...
+  componentDidMount() {
+    this.props.form.setFields({
+      name: {
+        defaultValue: "asdasd",
+        validators: [minstringvalidator, maxstringvalidator, isRequired]
+      },
+      age: {
+        defaultValue: "2017-06-01",
+        validators: [isRequired]
+      },
+      email: {
+        defaultValue: "jesus-aaaaaa@gml.c",
+        validators: [emailValidator, isRequired]
+      },
+      repeatEmail: {
+        defaultValue: "jesus-aaaaaa@gml.c",
+        validators: [equalValidatorEmail, isRequired]
+      },
+      policyPrivacy: {
+        defaultValue: true,
+        validators: [isRequired]
+      }
+    });
+  }
+  ...
+```
+
+
+### Step 3: Do not forget, add to each of the fields of your html form your handler (props.form.getInput, props.form.getSelect, ...)
+```jsx
+  ...
+  render() {
+    const { form } = this.props;
+    return form.loading ? (
+      <p>Loading...</p>
+    ) : (
+      <div>
+        <form onSubmit={form.submit}>
+          Name:
+          <input type="text" {...form.getInput("name")} />
+        
+          Age:
+          <input type="date" {...form.getInput("age")} />
+          
+          Email:
+          <input type="text" {...form.getInput("email")} />
+          
+          Repeat email:
+          <input type="text" {...form.getInput("repeatEmail")} />
+          
+          Condiciones de privacidad:
+          <input type="checkbox" {...form.getCheckbox("policyPrivacy")} />
+          
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+  }
+  ...
+```
+
+
+### Step 4: Finally, in submit release the X
+```jsx
+    ...
+    <form onSubmit={form.submit}>
+    ...
+```
+
+
 ## Examples 
 
 * [Basics]
@@ -84,25 +167,15 @@ export const BasicForm = formWrapper(BasicFormComponent);
 * [Avanced Validation]
 ```jsx
 export class CompleteFormComponent extends React.Component {
-  static propTypes = {
-    form: PropTypes.shape({
-      setFields: PropTypes.func,
-      setValues: PropTypes.func,
-      isValid: PropTypes.bool,
-      values: PropTypes.any,
-      clear: PropTypes.func
-    })
-  };
-
   componentDidMount() {
-    // this.props.form.validationWriteWithoutSubmit(true);
+    this.props.form.validationWriteWithoutSubmit(true);
     this.props.form.setFields({
       name: {
         defaultValue: "asdasd",
         validators: [minstringvalidator, maxstringvalidator, isRequired]
       },
       age: {
-        defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
+        defaultValue: "2017-06-01",
         validators: [isRequired]
       },
       email: {
