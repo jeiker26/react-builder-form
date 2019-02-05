@@ -29,7 +29,7 @@ export const FIELDS_MOCKS = {
     validators: [isRequired]
   },
   films: {
-    defaultValue: ["film1", "film3"],
+    defaultValue: "film1",
     validators: [isRequired]
   },
   car: {
@@ -234,14 +234,6 @@ export const emailValidator = new Validator(value => {
 export const equalValidatorEmail = new Validator((value, formElements) => {
   const error = "EL EMAIL NO COINCIDE.";
   if (value && value === formElements.email.value) {
-    return false;
-  }
-  return error;
-});
-
-export const checkIfTrue = new Validator(value => {
-  const error = "Debes aceptar la política de privacidad.";
-  if (value) {
     return false;
   }
   return error;

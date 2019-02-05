@@ -10,15 +10,16 @@ import { isRequired } from "./Validator";
 
 describe("FormWrapper suite", () => {
   it("should return loading state", () => {
-    // shallow no execute componentDidMount
     const wrapper = shallow(<FormMock />);
-    expect(wrapper.html()).toBe("<p>Loading...</p>");
+    expect(wrapper.props().form.loading).toBe(true);
   });
 
   it("should return loading state", () => {
-    // mount execute componentDidMount
-    const wrapper = mount(<FormMock />);
-    expect(wrapper.find("form").length).toEqual(1);
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {}
+    });
+    expect(wrapper.props().form.loading).toBe(false);
   });
 
   it("should load default values", () => {
@@ -43,18 +44,11 @@ describe("FormWrapper suite", () => {
     );
 
     // checkboxmulti
-    expect(wrapper.find("input[name='films[]'][checked=true]").length).toEqual(2);
-    expect(
-      wrapper
-        .find(`input[name='films[]'][checked=true][value="${FIELDS_MOCKS.films.defaultValue[0]}"]`)
-        .props().value
-    ).toEqual(FIELDS_MOCKS.films.defaultValue[0]);
+    expect(wrapper.find(`input[name='films[]'][checked=true]`).props().value).toEqual(
+      FIELDS_MOCKS.films.defaultValue
+    );
 
-    expect(
-      wrapper
-        .find(`input[name='films[]'][checked=true][value="${FIELDS_MOCKS.films.defaultValue[1]}"]`)
-        .props().value
-    ).toEqual(FIELDS_MOCKS.films.defaultValue[1]);
+    // checkboxmulti case 2
 
     // select
     expect(wrapper.find(`select[name='car']`).props().value).toEqual(
@@ -123,7 +117,6 @@ describe("FormWrapper suite", () => {
     expect(wrapper.props().form.isValidationWrite).toBe(true);
   });
 
-  // check isValid
   it("should compile form and check if form is valid [no validators]", () => {
     const event = {
       preventDefault: () => {}
@@ -173,5 +166,129 @@ describe("FormWrapper suite", () => {
     ]);
   });
 
-  // todo: check errors
+  it("should check onChange", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields(FIELDS_MOCKS); // setElements
+
+    // text
+    wrapper.props().form.elements.name.onChange({ target: { value: "var" } });
+    expect(wrapper.props().form.elements.name.value).toEqual("var");
+
+    // date
+    wrapper.props().form.elements.age.onChange({ target: { value: "1992-04-19" } });
+    expect(wrapper.props().form.elements.age.value).toEqual("1992-04-19");
+
+    // checkbox true/false
+    wrapper.props().form.elements.policyPrivacy.onChange({
+      target: { name: "policyPrivacy", type: "checkbox", checked: false }
+    });
+    expect(wrapper.props().form.elements.policyPrivacy.value).toEqual(false);
+
+    // radio
+    wrapper.props().form.elements.gender.onChange({ target: { type: "radio", value: "y" } });
+    expect(wrapper.props().form.elements.gender.value).toEqual("y");
+
+    // todo: radiomulti
+
+    // checkboxmulti
+    wrapper.props().form.elements.films.onChange({
+      target: { type: "checkbox", name: "films[]", value: "foo" }
+    });
+    expect(wrapper.props().form.elements.films.value).toEqual(["film1", "foo"]);
+
+    // select
+    wrapper.props().form.elements.car.onChange({ target: { value: "renault" } });
+    expect(wrapper.props().form.elements.car.value).toEqual("renault");
+  });
+
+  it("should get input interface", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields(FIELDS_MOCKS); // setElements
+
+    // text
+    const inputText = wrapper.props().form.getInput("name");
+    expect([inputText.name, typeof inputText.onChange === "function", inputText.value]).toEqual([
+      "name",
+      true,
+      FIELDS_MOCKS.name.defaultValue
+    ]);
+
+    // date
+    const inputDate = wrapper.props().form.getInput("age");
+    expect([inputDate.name, typeof inputDate.onChange === "function", inputDate.value]).toEqual([
+      "age",
+      true,
+      FIELDS_MOCKS.age.defaultValue
+    ]);
+
+    // checkbox true/false
+    const checkbox = wrapper.props().form.getCheckbox("policyPrivacy");
+    expect([
+      checkbox.name,
+      typeof checkbox.onChange === "function",
+      checkbox.value,
+      checkbox.checked
+    ]).toEqual(["policyPrivacy", true, FIELDS_MOCKS.policyPrivacy.defaultValue, true]);
+
+    // radio
+    const radio = wrapper.props().form.getRadio("gender", "y");
+    expect([radio.name, typeof radio.onChange === "function", radio.value, radio.checked]).toEqual(
+      ["gender", true, "y", false]
+    );
+
+    // todo: radiomulti
+
+    // checkboxmulti
+    const checkboxmulti = wrapper.props().form.getCheckboxMulti("films", "film4");
+    expect([
+      checkboxmulti.name,
+      typeof checkboxmulti.onChange === "function",
+      checkboxmulti.value,
+      checkboxmulti.checked
+    ]).toEqual(["films[]", true, "film4", false]);
+
+    // select
+    const select = wrapper.props().form.getSelect("car");
+    expect([select.name, typeof select.onChange === "function", select.value]).toEqual([
+      "car",
+      true,
+      FIELDS_MOCKS.car.defaultValue
+    ]);
+  });
+
+  it("should check errors", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        validators: [isRequired]
+      }
+    }); // setElements
+
+    wrapper.props().form.submit({ preventDefault: () => {} });
+    expect(wrapper.props().form.errors.name).toEqual(["Field is required"]);
+  });
+
+  it("should not check error", () => {
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      x: {
+        validators: [isRequired, minstringvalidator]
+      },
+      y: {
+        validators: [isRequired]
+      },
+      z: {
+        defaultValue: "fooVar",
+        validators: [isRequired, minstringvalidator]
+      }
+    }); // setElements
+
+    wrapper.props().form.submit({ preventDefault: () => {} });
+    expect(wrapper.props().form.errors).toEqual({
+      totalErrors: 3,
+      x: ["Field is required", "El elemento debe tener más de 3 caracteres."],
+      y: ["Field is required"],
+      z: []
+    });
+  });
 });

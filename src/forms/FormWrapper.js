@@ -1,5 +1,5 @@
 import React from "react";
-import { transformFalseValue } from "./utils";
+import { transformFalseValue, insertOrDeleteElemntArray, convertIntoArray } from "./utils";
 
 const INPUTS_TYPES = {
   radio: "radio",
@@ -43,6 +43,7 @@ export const formWrapper = WrappedComponent => {
       switch (type) {
         case INPUTS_TYPES.radio:
           iField.checked = field.value === value;
+          iField.value = value;
           break;
         case INPUTS_TYPES.checkbox:
           iField.checked = field.value;
@@ -67,7 +68,7 @@ export const formWrapper = WrappedComponent => {
         setFields: this.setElements,
         getErrors: this.getErrors,
         getInput: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
-        getSelect: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
+        getSelect: fieldName => this.getInput(INPUTS_TYPES.input, fieldName), // todo add type select
         getCheckbox: fieldName => this.getInput(INPUTS_TYPES.checkbox, fieldName),
         getRadio: (fieldName, value) => this.getInput(INPUTS_TYPES.radio, fieldName, value),
         getCheckboxMulti: (fieldName, value) =>
@@ -194,24 +195,10 @@ export const formWrapper = WrappedComponent => {
       let element = this.getFormField(elementName); // deepClone
       let value = null;
       switch (e.target.type) {
-        case "radio":
-          if (/(\[\])$/.test(e.target.name)) {
-            value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(
-              e => !!e
-            );
-            const index = value.indexOf(e.target.value);
-            index === -1 ? value.push(e.target.value) : value.splice(index, 1);
-          } else {
-            value = e.target.value;
-          }
-          break;
         case "checkbox":
           if (/(\[\])$/.test(e.target.name)) {
-            value = (Array.isArray(element.value) ? [...element.value] : [element.value]).filter(
-              e => !!e
-            );
-            const index = value.indexOf(e.target.value);
-            index === -1 ? value.push(e.target.value) : value.splice(index, 1);
+            value = convertIntoArray(element.value);
+            value = insertOrDeleteElemntArray(value, e.target.value);
           } else {
             value = e.target.checked;
           }
