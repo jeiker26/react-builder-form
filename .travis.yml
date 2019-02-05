@@ -5,12 +5,12 @@ node_js:
 notifications:
   email:
   - jesusgraficap@gmail.com
-  
+
 script:
-  - yarn test
-  - yarn prepare
+  - npm run test
+  - npm prepare
 install:
-  - yarn install
+  - npm install
 branches:
   only:
     - master
