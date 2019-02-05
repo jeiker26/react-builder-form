@@ -98,10 +98,13 @@ export const BasicForm = formWrapper(BasicFormComponent);
 | `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
 | `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
 | `getInput()` | `nameField` | Get input attributes. Only text, number and date.
-| `getInputCheck()` | `nameField` | Get input attributes. Only for check and radio, not multiple.
+| `getSelect()` | `nameField` | Get input attributes. Only for select.
+| `getCheckbox()` | `nameField` | Get input attributes. Only for simple checkbox: true/false.
+| `getRadio()` | `"nameField"` , `"value"` | Get input attributes. Only for radio type.
+| `getCheckboxMulti()` | `"nameField"` , `"value"` | Get input attributes. Only for check with multiple options.
 
 
-getInputCheck
+
 
 #### Render props
 | prop | types | default value | description |
