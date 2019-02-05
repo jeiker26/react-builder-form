@@ -16,8 +16,10 @@ script:
   - npm run test
 after_success:
   - codecov --file coverage/lcov.info --disable search
-
-
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_TOKEN
 
 branches:
   only:
