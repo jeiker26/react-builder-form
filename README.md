@@ -6,8 +6,6 @@
 [travis-url]: https://travis-ci.org/jeiker26/react-builder-form
 [node-image]: https://img.shields.io/badge/node.js-%3E=5.4-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-  
-
 
 Small library to simplify the use of forms in React.
 
