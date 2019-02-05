@@ -7,8 +7,8 @@ notifications:
   - jesusgraficap@gmail.com
 
 script:
-  - npm run test
   - npm prepare
+  - npm run test
 install:
   - npm install
 branches:
