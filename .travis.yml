@@ -3,7 +3,7 @@ node_js:
   - '8'
 script:
   - yarn test
-  - yarn build
+  - yarn prepare
 install:
   - yarn install
 branches:
