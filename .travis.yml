@@ -1,22 +1,30 @@
 language: node_js
 node_js:
   - '8'
-
 notifications:
   email:
   - jesusgraficap@gmail.com
 
-script:
-  - npm prepare
-  - npm run test
+
+
+before_install:
+  - pip install --user codecov
 install:
   - npm install
+script:
+  - npm run prepare
+  - npm run test
+after_success:
+  - codecov --file coverage/lcov.info --disable search
+
+
+
 branches:
   only:
     - master
     - develop
 
-before_install:
-  - pip install --user codecov
-after_success:
-  - codecov --file coverage/lcov.info --disable search
+
+
+
+
