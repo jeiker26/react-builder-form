@@ -13,7 +13,7 @@ install:
   - npm install
 script:
   - npm run prepare
-  - npm run test
+  - npm run test:ci
 after_success:
   - codecov --file coverage/lcov.info --disable search
 deploy:
