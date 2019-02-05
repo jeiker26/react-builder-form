@@ -6,7 +6,9 @@ import {
   MOCKS_NEW_VALUES,
   MOCKS_CLEAR_VALUES,
   FIELDS_ONCHANGE_MOCKS,
-  minstringvalidator
+  minstringvalidator,
+  MINSTRINGVALIDATOR_ERROR,
+  FakeComponent
 } from "./FormWrapper.hoc.mock";
 import { isRequired, IS_REQUIRED_ERROR } from "./Validator";
 
@@ -81,40 +83,55 @@ describe("FormWrapper suite", () => {
   it("should check onChange", () => {
     const wrapper = shallow(<FormMock />);
     wrapper.props().form.setFields(FIELDS_MOCKS);
-    const elements = wrapper.props().form.elements;
 
-    console.log(elements);
     // text
     const textInput = "name";
-    elements[textInput].onChange(FIELDS_ONCHANGE_MOCKS[textInput]);
-    expect(elements[textInput].value).toEqual(FIELDS_ONCHANGE_MOCKS[textInput].target.value);
+    wrapper.props().form.elements[textInput].onChange(FIELDS_ONCHANGE_MOCKS[textInput]);
+    expect(wrapper.props().form.elements[textInput].value).toEqual(
+      FIELDS_ONCHANGE_MOCKS[textInput].target.value
+    );
 
     // date
-    wrapper.props().form.elements.age.onChange();
-    expect(wrapper.props().form.elements.age.value).toEqual("1992-04-19");
+    const dateInput = "age";
+    wrapper.props().form.elements[dateInput].onChange(FIELDS_ONCHANGE_MOCKS[dateInput]);
+    expect(wrapper.props().form.elements[dateInput].value).toEqual(
+      FIELDS_ONCHANGE_MOCKS[dateInput].target.value
+    );
 
     // checkbox true/false
-    wrapper.props().form.elements.policyPrivacy.onChange();
-    expect(wrapper.props().form.elements.policyPrivacy.value).toEqual(false);
+    const checkbox = "policyPrivacy";
+    wrapper.props().form.elements[checkbox].onChange(FIELDS_ONCHANGE_MOCKS[checkbox]);
+    expect(wrapper.props().form.elements[checkbox].value).toEqual(
+      FIELDS_ONCHANGE_MOCKS[checkbox].target.checked
+    );
 
     // radio
-    wrapper.props().form.elements.gender.onChange();
-    expect(wrapper.props().form.elements.gender.value).toEqual("y");
-
-    // todo: radiomulti
+    const radio = "gender";
+    wrapper.props().form.elements[radio].onChange(FIELDS_ONCHANGE_MOCKS[radio]);
+    expect(wrapper.props().form.elements[radio].value).toEqual(
+      FIELDS_ONCHANGE_MOCKS[radio].target.value
+    );
 
     // checkboxmulti
-    wrapper.props().form.elements.films.onChange();
-    expect(wrapper.props().form.elements.films.value).toEqual(["film1", "foo"]);
+    const checkboxmulti = "films";
+    wrapper.props().form.elements[checkboxmulti].onChange(FIELDS_ONCHANGE_MOCKS[checkboxmulti]);
+    expect(wrapper.props().form.elements[checkboxmulti].value).toEqual([
+      FIELDS_MOCKS[checkboxmulti].defaultValue,
+      FIELDS_ONCHANGE_MOCKS[checkboxmulti].target.value
+    ]);
 
     // select
-    wrapper.props().form.elements.car.onChange();
-    expect(wrapper.props().form.elements.car.value).toEqual("renault");
+    const select = "car";
+    wrapper.props().form.elements[select].onChange(FIELDS_ONCHANGE_MOCKS[select]);
+    expect(wrapper.props().form.elements[select].value).toEqual(
+      FIELDS_ONCHANGE_MOCKS[select].target.value
+    );
   });
 
   it("should get input interface", () => {
+    // todo: delete magic string
     const wrapper = shallow(<FormMock />);
-    wrapper.props().form.setFields(FIELDS_MOCKS); // setElements
+    wrapper.props().form.setFields(FIELDS_MOCKS);
 
     // text
     const inputText = wrapper.props().form.getInput("name");
@@ -122,14 +139,6 @@ describe("FormWrapper suite", () => {
       "name",
       true,
       FIELDS_MOCKS.name.defaultValue
-    ]);
-
-    // date
-    const inputDate = wrapper.props().form.getInput("age");
-    expect([inputDate.name, typeof inputDate.onChange === "function", inputDate.value]).toEqual([
-      "age",
-      true,
-      FIELDS_MOCKS.age.defaultValue
     ]);
 
     // checkbox true/false
@@ -141,15 +150,11 @@ describe("FormWrapper suite", () => {
       checkbox.checked
     ]).toEqual(["policyPrivacy", true, FIELDS_MOCKS.policyPrivacy.defaultValue, true]);
 
-    // radio
     const radio = wrapper.props().form.getRadio("gender", "y");
     expect([radio.name, typeof radio.onChange === "function", radio.value, radio.checked]).toEqual(
       ["gender", true, "y", false]
     );
 
-    // todo: radiomulti
-
-    // checkboxmulti
     const checkboxmulti = wrapper.props().form.getCheckboxMulti("films", "film4");
     expect([
       checkboxmulti.name,
@@ -158,7 +163,6 @@ describe("FormWrapper suite", () => {
       checkboxmulti.checked
     ]).toEqual(["films[]", true, "film4", false]);
 
-    // select
     const select = wrapper.props().form.getSelect("car");
     expect([select.name, typeof select.onChange === "function", select.value]).toEqual([
       "car",
@@ -167,19 +171,7 @@ describe("FormWrapper suite", () => {
     ]);
   });
 
-  it("should check errors", () => {
-    const wrapper = shallow(<FormMock />);
-    wrapper.props().form.setFields({
-      name: {
-        validators: [isRequired]
-      }
-    }); // setElements
-
-    wrapper.props().form.submit({ preventDefault: () => {} });
-    expect(wrapper.props().form.errors.name).toEqual(["Field is required"]);
-  });
-
-  it("should not check error", () => {
+  it("should check error", () => {
     const wrapper = shallow(<FormMock />);
     wrapper.props().form.setFields({
       x: {
@@ -192,18 +184,33 @@ describe("FormWrapper suite", () => {
         defaultValue: "fooVar",
         validators: [isRequired, minstringvalidator]
       }
-    }); // setElements
+    });
 
     wrapper.props().form.submit({ preventDefault: () => {} });
     expect(wrapper.props().form.errors).toEqual({
       totalErrors: 3,
-      x: ["Field is required", "El elemento debe tener más de 3 caracteres."],
-      y: ["Field is required"],
+      x: [IS_REQUIRED_ERROR, MINSTRINGVALIDATOR_ERROR],
+      y: [IS_REQUIRED_ERROR],
       z: []
     });
   });
 });
 
+describe("minstringvalidator suite", () => {
+  it("should return error", () => {
+    expect(minstringvalidator.exec("as")).toEqual(MINSTRINGVALIDATOR_ERROR);
+  });
+
+  it("should return not error", () => {
+    expect(minstringvalidator.exec("Eass")).toBe(false);
+  });
+});
+
+describe("FakeComponent suite", () => {
+  it("should render correctly", () => {
+    expect(shallow(<FakeComponent />).exists()).toBe(true);
+  });
+});
 /* Integration test
   it("should compile form and check if form is valid with validators, then setField and return check form", () => {
     const event = {

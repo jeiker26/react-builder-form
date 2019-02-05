@@ -8,6 +8,7 @@ With a simple **higher**-**order** component (HOC), you can get:
 
 ## Todo
 - Tests.
+- Tests Props order props.
 - Open fields properties for include (onclick, onFocus, ...)
 - Installation (In progress NPM package). [rollup](https://github.com/rollup/rollup)
 - Examples.

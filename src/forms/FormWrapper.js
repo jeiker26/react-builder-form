@@ -36,7 +36,7 @@ export const formWrapper = WrappedComponent => {
     /** Public Interface */
     getErrors = elementName => this.state.errors[elementName] || [];
 
-    getInput = (type = "input", fieldName, value = false) => {
+    getInput = (type = INPUTS_TYPES.input, fieldName, value = false) => {
       const field = this.getFormField(fieldName);
       const iField = {};
       iField.name = fieldName;
