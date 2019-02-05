@@ -29,11 +29,11 @@ You can install with [NPM](https://npmjs.com/)
 
 ### Step 1: Create your component and do the HOC
 ```jsx
-export class CompleteFormComponent extends React.Component {
+class ExampleFormComponent extends React.Component {
   ...
 }
 
-export const CompleteForm = formWrapper(CompleteFormComponent);
+export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 
@@ -102,13 +102,50 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 ```
 
 
-### Step 4: Finally, in submit release the X
+### Step 4: In submit release the X
 ```jsx
     ...
     <form onSubmit={form.submit}>
     ...
 ```
 
+### Step 5: Finally, you will receive the result of the form by props, "componentDidUpdate"
+```jsx
+    ...
+    componentDidUpdate() {
+        if (this.props.form.isValid) {
+        console.log("Send data:", this.props.form.values);
+        }
+    }
+    ...
+```
+
+### Optional: you can get the errors of each of the fields
+```jsx
+    ...
+    render() {
+        ...
+        <form onSubmit={form.submit}>
+          Name:
+          <input type="text" {...form.getInput("name")} />
+          {form.getErrors("name").map(e => (
+            <span key={e} style={{ color: "red" }}>
+              {e}
+            </span>
+          ))}
+
+          Age:
+          <input type="date" {...form.getInput("age")} />
+          {form.getErrors("age").map(e => (
+            <span key={e} style={{ color: "red" }}>
+              {e}
+            </span>
+          ))}
+    ...
+```
+
+- You can also get all the errors, with props `props.form.errors`.
+- Or enable error detection in real time, putting props `props.form.validationWriteWithoutSubmit()` in `componentDidMount()`.
 
 ## Examples 
 
