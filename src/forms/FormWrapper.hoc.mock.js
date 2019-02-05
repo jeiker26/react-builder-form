@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formWrapper } from "./FormWrapper";
+import { formWrapper, INPUTS_TYPES } from "./FormWrapper";
 import { Validator, isRequired } from "./Validator";
 
 export const FIELDS_MOCKS = {
@@ -41,12 +41,36 @@ export const FIELDS_MOCKS = {
 export const MOCKS_NEW_VALUES = {
   name: "Jesussss",
   email: "jesusgrads@mmm.es",
+  repeatEmail: "", // only for test
   age: "1992-04-19",
   policyPrivacy: true,
   gender: "y",
   films: ["film2"],
   car: "mercedes"
 };
+
+export const MOCKS_CLEAR_VALUES = {
+  name: "",
+  email: "",
+  repeatEmail: "",
+  age: "",
+  policyPrivacy: false,
+  gender: "",
+  films: "",
+  car: ""
+};
+
+export const FIELDS_ONCHANGE_MOCKS = {
+  name: { target: { value: "var", type: INPUTS_TYPES.input } },
+  age: { target: { value: "1992-04-19", type: INPUTS_TYPES.input } },
+  policyPrivacy: {
+    target: { name: "policyPrivacy", type: INPUTS_TYPES.checkbox, checked: false }
+  },
+  gender: { target: { type: INPUTS_TYPES.radio, value: "y" } },
+  films: { target: { type: INPUTS_TYPES.checkbox, name: "films[]", value: "foo" } },
+  car: { target: { value: "renault", type: INPUTS_TYPES.select } }
+};
+
 export class FormMockComponent extends React.Component {
   static propTypes = {
     form: PropTypes.shape({

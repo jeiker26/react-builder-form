@@ -1,12 +1,14 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import {
   FormMock,
   FIELDS_MOCKS,
   MOCKS_NEW_VALUES,
+  MOCKS_CLEAR_VALUES,
+  FIELDS_ONCHANGE_MOCKS,
   minstringvalidator
 } from "./FormWrapper.hoc.mock";
-import { isRequired } from "./Validator";
+import { isRequired, IS_REQUIRED_ERROR } from "./Validator";
 
 describe("FormWrapper suite", () => {
   it("should return loading state", () => {
@@ -23,92 +25,36 @@ describe("FormWrapper suite", () => {
   });
 
   it("should load default values", () => {
-    const wrapper = mount(<FormMock />);
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields(FIELDS_MOCKS);
 
-    // text
-    expect(wrapper.find("input[name='name']").props().value).toEqual(
-      FIELDS_MOCKS.name.defaultValue
-    );
-
-    // date
-    expect(wrapper.find("input[name='age']").props().value).toEqual(FIELDS_MOCKS.age.defaultValue);
-
-    // checkbox true/false
-    expect(wrapper.find("input[name='policyPrivacy']").props().value).toEqual(
-      FIELDS_MOCKS.policyPrivacy.defaultValue
-    );
-
-    // radio
-    expect(wrapper.find("input[name='gender'][checked=true]").props().value).toEqual(
-      FIELDS_MOCKS.gender.defaultValue
-    );
-
-    // checkboxmulti
-    expect(wrapper.find(`input[name='films[]'][checked=true]`).props().value).toEqual(
-      FIELDS_MOCKS.films.defaultValue
-    );
-
-    // checkboxmulti case 2
-
-    // select
-    expect(wrapper.find(`select[name='car']`).props().value).toEqual(
-      FIELDS_MOCKS.car.defaultValue
-    );
+    Object.keys(FIELDS_MOCKS).forEach(fieldName => {
+      expect(wrapper.props().form.elements[fieldName].value).toEqual(
+        FIELDS_MOCKS[fieldName].defaultValue
+      );
+    });
   });
 
   it("should load set new values", () => {
-    const wrapper = mount(<FormMock />);
-    wrapper.find("#btn-set-values").simulate("click");
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields(FIELDS_MOCKS);
+    wrapper.props().form.setValues(MOCKS_NEW_VALUES);
 
-    // text
-    expect(wrapper.find("input[name='name']").props().value).toEqual(MOCKS_NEW_VALUES.name);
-
-    // date
-    expect(wrapper.find("input[name='age']").props().value).toEqual(MOCKS_NEW_VALUES.age);
-
-    // checkbox true/false
-    expect(wrapper.find("input[name='policyPrivacy']").props().value).toEqual(
-      MOCKS_NEW_VALUES.policyPrivacy
-    );
-
-    // radio
-    expect(wrapper.find("input[name='gender'][checked=true]").props().value).toEqual(
-      MOCKS_NEW_VALUES.gender
-    );
-
-    // checkboxmulti
-    expect(wrapper.find("input[name='films[]'][checked=true]").length).toEqual(1);
-    expect(
-      wrapper
-        .find(`input[name='films[]'][checked=true][value="${MOCKS_NEW_VALUES.films[0]}"]`)
-        .props().value
-    ).toEqual(MOCKS_NEW_VALUES.films[0]);
-
-    // select
-    expect(wrapper.find(`select[name='car']`).props().value).toEqual(MOCKS_NEW_VALUES.car);
+    Object.keys(FIELDS_MOCKS).forEach(fieldName => {
+      expect(wrapper.props().form.elements[fieldName].value).toEqual(MOCKS_NEW_VALUES[fieldName]);
+    });
   });
 
   it("should clear values", () => {
-    const wrapper = mount(<FormMock />);
-    wrapper.find("#btn-clear").simulate("click");
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields(FIELDS_MOCKS);
+    wrapper.props().form.clear();
 
-    // text
-    expect(wrapper.find("input[name='name']").props().value).toEqual("");
-
-    // date
-    expect(wrapper.find("input[name='age']").props().value).toEqual("");
-
-    // checkbox true/false
-    expect(wrapper.find("input[name='policyPrivacy']").props().value).toBe(false);
-
-    // radio
-    expect(wrapper.find("input[name='gender'][checked=true]").length).toEqual(0);
-
-    // checkboxmulti
-    expect(wrapper.find("input[name='films[]'][checked=true]").length).toEqual(0);
-
-    // select
-    expect(wrapper.find(`select[name='car']`).props().value).toEqual("");
+    Object.keys(FIELDS_MOCKS).forEach(fieldName => {
+      expect(wrapper.props().form.elements[fieldName].value).toEqual(
+        MOCKS_CLEAR_VALUES[fieldName]
+      );
+    });
   });
 
   it("should set validationWriteWithoutSubmit a true", () => {
@@ -117,87 +63,52 @@ describe("FormWrapper suite", () => {
     expect(wrapper.props().form.isValidationWrite).toBe(true);
   });
 
-  it("should compile form and check if form is valid [no validators]", () => {
-    const event = {
-      preventDefault: () => {}
-    };
+  it("should compile form and get error, with activate validationWriteWithoutSubmit", () => {
     const wrapper = shallow(<FormMock />);
+    const FIELD_NAME = "name";
     wrapper.props().form.setFields({
-      name: {
-        defaultValue: "foo",
-        validators: []
-      }
-    }); // Set elements
-    expect(wrapper.props().form.isValid).toBe(false);
-    wrapper.props().form.submit(event);
-    expect(wrapper.props().form.isValid).toBe(true);
-  });
-
-  it("should compile form and check if form is valid with validators, then setField and return check form", () => {
-    const event = {
-      preventDefault: () => {}
-    };
-    const wrapper = shallow(<FormMock />);
-    wrapper.props().form.setFields({
-      name: {
+      [FIELD_NAME]: {
+        defaultValue: "fooVar",
         validators: [isRequired]
       }
-    }); // Set elements
-    expect(wrapper.props().form.isValid).toBe(false);
-    wrapper.props().form.submit(event);
-    expect(wrapper.props().form.isValid).toBe(false);
-    wrapper.props().form.setValues({ name: "foo" });
-    wrapper.props().form.submit(event);
-    expect(wrapper.props().form.isValid).toBe(true);
-  });
-
-  it("should compile form and check if form is valid with validators, then setField and return check form with validationWriteWithoutSubmit", () => {
-    const wrapper = shallow(<FormMock />);
-    wrapper.props().form.setFields({
-      name: {
-        defaultValue: "fooVar",
-        validators: [isRequired, minstringvalidator]
-      }
-    }); // Set elements
+    });
     wrapper.props().form.validationWriteWithoutSubmit(true);
-    wrapper.props().form.elements["name"].onChange({ target: { value: "var" } });
-    expect(wrapper.props().form.getErrors("name")).toEqual([
-      "El elemento debe tener más de 3 caracteres."
-    ]);
+    expect(wrapper.props().form.getErrors(FIELD_NAME)).toEqual([]);
+    wrapper.props().form.elements[FIELD_NAME].onChange({ target: { value: "" } });
+    expect(wrapper.props().form.getErrors(FIELD_NAME)).toEqual([IS_REQUIRED_ERROR]);
   });
 
   it("should check onChange", () => {
     const wrapper = shallow(<FormMock />);
-    wrapper.props().form.setFields(FIELDS_MOCKS); // setElements
+    wrapper.props().form.setFields(FIELDS_MOCKS);
+    const elements = wrapper.props().form.elements;
 
+    console.log(elements);
     // text
-    wrapper.props().form.elements.name.onChange({ target: { value: "var" } });
-    expect(wrapper.props().form.elements.name.value).toEqual("var");
+    const textInput = "name";
+    elements[textInput].onChange(FIELDS_ONCHANGE_MOCKS[textInput]);
+    expect(elements[textInput].value).toEqual(FIELDS_ONCHANGE_MOCKS[textInput].target.value);
 
     // date
-    wrapper.props().form.elements.age.onChange({ target: { value: "1992-04-19" } });
+    wrapper.props().form.elements.age.onChange();
     expect(wrapper.props().form.elements.age.value).toEqual("1992-04-19");
 
     // checkbox true/false
-    wrapper.props().form.elements.policyPrivacy.onChange({
-      target: { name: "policyPrivacy", type: "checkbox", checked: false }
-    });
+    wrapper.props().form.elements.policyPrivacy.onChange();
     expect(wrapper.props().form.elements.policyPrivacy.value).toEqual(false);
 
     // radio
-    wrapper.props().form.elements.gender.onChange({ target: { type: "radio", value: "y" } });
+    wrapper.props().form.elements.gender.onChange();
     expect(wrapper.props().form.elements.gender.value).toEqual("y");
 
     // todo: radiomulti
 
     // checkboxmulti
-    wrapper.props().form.elements.films.onChange({
-      target: { type: "checkbox", name: "films[]", value: "foo" }
-    });
+    wrapper.props().form.elements.films.onChange();
     expect(wrapper.props().form.elements.films.value).toEqual(["film1", "foo"]);
 
     // select
-    wrapper.props().form.elements.car.onChange({ target: { value: "renault" } });
+    wrapper.props().form.elements.car.onChange();
     expect(wrapper.props().form.elements.car.value).toEqual("renault");
   });
 
@@ -292,3 +203,39 @@ describe("FormWrapper suite", () => {
     });
   });
 });
+
+/* Integration test
+  it("should compile form and check if form is valid with validators, then setField and return check form", () => {
+    const event = {
+      preventDefault: () => {}
+    };
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        validators: [isRequired]
+      }
+    }); // Set elements
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.setValues({ name: "foo" });
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(true);
+  });
+
+  it("should compile form and check if form is valid [no validators]", () => {
+    const event = {
+      preventDefault: () => {}
+    };
+    const wrapper = shallow(<FormMock />);
+    wrapper.props().form.setFields({
+      name: {
+        defaultValue: "foo",
+        validators: []
+      }
+    }); // Set elements
+    expect(wrapper.props().form.isValid).toBe(false);
+    wrapper.props().form.submit(event);
+    expect(wrapper.props().form.isValid).toBe(true);
+  });
+*/

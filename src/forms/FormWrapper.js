@@ -1,11 +1,12 @@
 import React from "react";
 import { transformFalseValue, insertOrDeleteElemntArray, convertIntoArray } from "./utils";
 
-const INPUTS_TYPES = {
+export const INPUTS_TYPES = {
   radio: "radio",
   checkbox: "checkbox",
   checkboxMulti: "checkboxMulti",
-  input: "input"
+  input: "input",
+  select: "select"
 };
 
 const initialState = {
@@ -195,7 +196,7 @@ export const formWrapper = WrappedComponent => {
       let element = this.getFormField(elementName); // deepClone
       let value = null;
       switch (e.target.type) {
-        case "checkbox":
+        case INPUTS_TYPES.checkbox:
           if (/(\[\])$/.test(e.target.name)) {
             value = convertIntoArray(element.value);
             value = insertOrDeleteElemntArray(value, e.target.value);
