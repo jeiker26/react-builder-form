@@ -15,7 +15,6 @@ With a simple **higher**-**order** component (HOC), you can get:
 3.  Control of validations.
 
 ## Todo
-- Tests.
 - Tests Props order props(father to children).
 - Examples.
 - Travis CI
