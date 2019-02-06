@@ -1,7 +1,7 @@
 {
-  "name": "react-forms-builder",
+  "name": "@jkr26/react-forms-builder-logic",
   "description": "Small library to simplify the use of forms in React.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "react form",
     "form builder",
@@ -25,7 +25,8 @@
     "test": "BABEL_ENV=test jest  --watchAll --no-cache --config ./jest.config.json",
     "test:ci": "BABEL_ENV=test jest --no-cache --config ./jest.config.json --runInBand",
     "test:coverage": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
-    "start:example": "webpack-dev-server --config ./webpack.config.js --mode development"
+    "start:example": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "release": "npm publish --access=public"
   },
   "peerDependencies": {
     "react": ">=0.14.0 <17.0.0"

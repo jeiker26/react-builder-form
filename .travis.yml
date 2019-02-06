@@ -16,10 +16,17 @@ script:
   - npm run test:ci
 after_success:
   - codecov --file coverage/lcov.info --disable search
+before_deploy:
+  - cd dist
 deploy:
   provider: npm
   email: $NPM_EMAIL
-  api_key: $NPM_TOKEN
+  skip_cleanup: true
+  api_key:
+    secure: $NPM_TOKEN
+  on:
+    branch: master
+    tags: true
 
 branches:
   only:
