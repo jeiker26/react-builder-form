@@ -10,7 +10,7 @@ import {
   MINSTRINGVALIDATOR_ERROR,
   FakeComponent
 } from "./FormWrapper.hoc.mock";
-import { isRequired, IS_REQUIRED_ERROR } from "./Validator";
+import { isRequired, IS_REQUIRED_ERROR } from "../../src/lib/Validator";
 
 describe("FormWrapper suite", () => {
   it("should return loading state", () => {

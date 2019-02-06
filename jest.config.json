@@ -1,10 +1,7 @@
 {
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "<rootDir>/src/**/*.{js,jsx}",
-    "!<rootDir>/src/setupTests.js",
-    "!<rootDir>/src/**/index.js",
-    "!<rootDir>/node_modules/"
+    "<rootDir>/tests/**/*.{js,jsx}"
   ],
   "coverageDirectory": "coverage",
   "coverageThreshold": {
@@ -16,11 +13,11 @@
     }
   },
   "notify": true,
-  "roots": ["<rootDir>/src"],
+  "roots": ["<rootDir>/tests"],
   "setupFiles": ["<rootDir>/enzyme.config.js"],
   "transform": {
     "^.+\\.(js|jsx)?$": "babel-jest"
   },
-  "verbose": false,
+  "verbose": true,
   "transformIgnorePatterns": ["<rootDir>/node_modules/"]
 }

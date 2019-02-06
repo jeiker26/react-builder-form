@@ -1,4 +1,8 @@
-import { transformFalseValue, convertIntoArray, insertOrDeleteElemntArray } from "./utils";
+import {
+  transformFalseValue,
+  convertIntoArray,
+  insertOrDeleteElemntArray
+} from "../../src/lib/utils";
 
 describe("transformFalseValue suite", () => {
   it("should return empty string if it does not receive parameters", () => {

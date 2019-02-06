@@ -1,5 +1,5 @@
-import { formWrapper, INPUTS_TYPES } from "./FormWrapper";
-import { Validator, isRequired } from "./Validator";
+import { formWrapper, INPUTS_TYPES } from "../../src/lib/FormWrapper";
+import { Validator, isRequired } from "../../src/lib/Validator";
 
 export const FIELDS_MOCKS = {
   name: {

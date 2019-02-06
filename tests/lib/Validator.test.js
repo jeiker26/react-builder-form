@@ -1,4 +1,4 @@
-import { isRequired, Validator } from "./Validator";
+import { isRequired, Validator } from "../../src/lib/Validator";
 
 describe("Validator class suite", () => {
   it("should return false if constructor is empty", () => {
