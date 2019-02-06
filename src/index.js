@@ -1,6 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { App } from "./App";
+import { formWrapper } from "./lib/FormWrapper";
+import { Validator, isRequired } from "./lib/Validator";
 
-ReactDOM.render(<App />, document.getElementById("root"));
-
+export { formWrapper, Validator, isRequired };

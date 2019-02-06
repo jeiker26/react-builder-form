@@ -1,0 +1,23 @@
+{
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "<rootDir>/tests/**/*.{js,jsx}"
+  ],
+  "coverageDirectory": "coverage",
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
+  },
+  "notify": true,
+  "roots": ["<rootDir>/tests"],
+  "setupFiles": ["<rootDir>/enzyme.config.js"],
+  "transform": {
+    "^.+\\.(js|jsx)?$": "babel-jest"
+  },
+  "verbose": true,
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"]
+}
