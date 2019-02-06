@@ -18,14 +18,17 @@ With a simple **higher**-**order** component (HOC), you can get:
 - Tests.
 - Tests Props order props(father to children).
 - Examples.
-- Installation (In progress NPM package) and travis CI
+- Travis CI
 - Open fields properties for include (onclick, onFocus, ...)
 
 
 ## Getting Started
 
 ### Installation (In progress NPM package)
-You can install with [NPM](https://npmjs.com/)
+You can install with [NPM](https://npmjs.com/):
+```js
+npm i @jkr26/react-forms-builder-logic 
+```
 
 ### Step 1: Create your component and do the HOC
 ```jsx
