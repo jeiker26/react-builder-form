@@ -14,23 +14,19 @@ With a simple **higher**-**order** component (HOC), you can get:
 2.  The status of the form.
 3.  Control of validations.
 
-## Todo
-- Tests Props order props(father to children).
-- Examples.
-- Travis CI
-- Open fields properties for include (onclick, onFocus, ...)
-
 
 ## Getting Started
 
-### Installation (In progress NPM package)
-You can install with [NPM](https://npmjs.com/):
+### Installation
+You can install with [NPM](https://npmjs.com/): [@jkr26/react-forms-builder-logic](https://www.npmjs.com/package/@jkr26/react-forms-builder-logic)
 ```js
-npm i @jkr26/react-forms-builder-logic 
+npm i --save @jkr26/react-forms-builder-logic 
 ```
 
 ### Step 1: Create your component and do the HOC
 ```jsx
+import { formWrapper } from "@jkr26/react-forms-builder-logic";
+
 class ExampleFormComponent extends React.Component {
   ...
 }
@@ -104,7 +100,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 
-### Step 4: In submit release the X
+### Step 4: In submit
 ```jsx
     ...
     <form onSubmit={form.submit}>
@@ -153,20 +149,18 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 
 * [Basics]
 ```jsx
-// Todo: add import
+import { formWrapper } from "@jkr26/react-forms-builder-logic";
 class BasicFormComponent extends React.Component {
 	componentDidMount() {
-		// Add elements
 		this.props.form.setFields({
 			name: {
-				defaultValue: "Jeus",
+				defaultValue: "RaAlRo",
 				validators: []
 			}
 		});
 	}
 
 	componentDidUpdate(prevProps) {
-		// Check if isValid form
 		if (!this.props.form.isValid) {
             console.log("Form errors:", this.props.form.errors);
             return;
@@ -180,13 +174,8 @@ class BasicFormComponent extends React.Component {
             (<p>Loading...</p>)
             :
             (<div>
-                Soy un formulario
                 <form onSubmit={form.submit}>
-                {/** Add property value and onChange to the field */}
-                <input 
-                    type="text"
-                    value={form.elements.name.value}
-                    onChange={form.elements.name.onChange} />
+                    <input type="text" {...form.getInput("name")} />
                     
                     {/** Get field errors */}
                     {/** Way 1 */}
