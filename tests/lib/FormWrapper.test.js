@@ -12,6 +12,8 @@ import {
 } from "./FormWrapper.hoc.mock";
 import { isRequired, IS_REQUIRED_ERROR } from "../../src/lib/Validator";
 
+// todo: set news fields test
+
 describe("FormWrapper suite", () => {
   it("should return form not initialized", () => {
     const wrapper = shallow(<FormMock />);

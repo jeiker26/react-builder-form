@@ -159,21 +159,33 @@ export const formWrapper = WrappedComponent => {
     };
 
     setValues = values => {
-      const elementsWithValues = {};
-      Object.keys(this.state.elements).forEach(e => {
-        // todo: refactor change order
-        elementsWithValues[e] = {
-          ...this.state.elements[e],
-          value: values[e] || transformFalseValue(this.state.elements[e].value)
-        };
-      });
+      this.setState(prevState => {
+        const elementsWithValues = prevState.elements;
 
-      this.setState({
-        errors: {},
-        values: {},
-        isValid: false,
-        submited: false,
-        elements: elementsWithValues
+        Object.keys(values).forEach(fieldName => {
+          // if exits element
+          const field = this.getFormField(fieldName);
+
+          // Check error field
+          if (!field) {
+            console.info(
+              `[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`
+            );
+          }
+
+          elementsWithValues[fieldName] = {
+            ...prevState.elements[fieldName],
+            value: values[fieldName] || transformFalseValue(prevState.elements[fieldName].value)
+          };
+        });
+
+        return {
+          errors: {},
+          values: {},
+          isValid: false,
+          submited: false,
+          elements: elementsWithValues
+        };
       });
     };
 
