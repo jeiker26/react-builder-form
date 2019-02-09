@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formWrapper } from "../../src/forms/FormWrapper";
-import { isRequired } from "../../src/forms/Validator";
+import { formWrapper } from "../../src/lib/FormWrapper";
+import { isRequired } from "../../src/lib/Validator";
 import {
   emailValidator,
   equalValidatorEmail,
@@ -13,6 +13,7 @@ export class CompleteFormComponent extends React.Component {
   static propTypes = {
     form: PropTypes.shape({
       setFields: PropTypes.func,
+      initForm: PropTypes.func,
       setValues: PropTypes.func,
       isValid: PropTypes.bool,
       values: PropTypes.any,
@@ -20,48 +21,55 @@ export class CompleteFormComponent extends React.Component {
     })
   };
 
-  componentDidMount() {
-    // this.props.form.validationWriteWithoutSubmit(true);
-    this.props.form.setFields({
-      name: {
-        defaultValue: "asdasd",
-        validators: [minstringvalidator, maxstringvalidator, isRequired]
-      },
-      age: {
-        defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
-        validators: [isRequired]
-      },
-      email: {
-        defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [emailValidator, isRequired]
-      },
-      repeatEmail: {
-        defaultValue: "jesus-aaaaaa@gml.c",
-        validators: [equalValidatorEmail, isRequired]
-      },
-      policyPrivacy: {
-        defaultValue: true,
-        validators: [isRequired]
-      },
-      gender: {
-        defaultValue: "x",
-        validators: [isRequired]
-      },
-      films: {
-        defaultValue: ["film1", "film3"],
-        validators: [isRequired]
-      },
-      car: {
-        defaultValue: "audi",
-        validators: [isRequired]
-      }
-    });
+  constructor(props) {
+    super(props);
+    this.setFields();
   }
 
   componentDidUpdate() {
     if (this.props.form.isValid) {
       console.log("Send data:", this.props.form.values);
     }
+  }
+
+  setFields() {
+    this.props.form.initForm(
+      {
+        name: {
+          defaultValue: "asdasd",
+          validators: [minstringvalidator, maxstringvalidator, isRequired]
+        },
+        age: {
+          defaultValue: "2017-06-01",
+          validators: [isRequired]
+        },
+        email: {
+          defaultValue: "jesus-aaaaaa@gml.co",
+          validators: [emailValidator, isRequired]
+        },
+        repeatEmail: {
+          defaultValue: "jesus-aaaaaa@gml.co",
+          validators: [equalValidatorEmail, isRequired]
+        },
+        policyPrivacy: {
+          defaultValue: true,
+          validators: [isRequired]
+        },
+        gender: {
+          defaultValue: "x",
+          validators: [isRequired]
+        },
+        films: {
+          defaultValue: ["film1", "film3"],
+          validators: [isRequired]
+        },
+        car: {
+          defaultValue: "audi",
+          validators: [isRequired]
+        }
+      },
+      true
+    );
   }
 
   handleClearForm = e => {
@@ -84,9 +92,7 @@ export class CompleteFormComponent extends React.Component {
 
   render() {
     const { form } = this.props;
-    return form.loading ? (
-      <p>Loading...</p>
-    ) : (
+    return (
       <div>
         <form onSubmit={form.submit}>
           Name:

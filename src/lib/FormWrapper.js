@@ -13,7 +13,7 @@ const initialState = {
   errors: {},
   values: {},
   isValid: false,
-  loading: true,
+  init: true,
   submited: false
 };
 
@@ -37,7 +37,20 @@ export const formWrapper = WrappedComponent => {
     getErrors = elementName => this.state.errors[elementName] || [];
 
     getInput = (type = INPUTS_TYPES.input, fieldName, value = false) => {
-      const field = this.getFormField(fieldName);
+      // Check error init
+      if (this.state.init) {
+        console.info(`[FORMWRAPPER] The form has not been started.`);
+        return {};
+      }
+
+      const field = this.getFormField(fieldName); // todo: refactor
+
+      // Check error field
+      if (!field) {
+        console.info(`[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`);
+        return {};
+      }
+
       const iField = {};
       iField.name = fieldName;
       iField.value = field.value;
@@ -67,9 +80,10 @@ export const formWrapper = WrappedComponent => {
         clear: this.clear,
         setValues: this.setValues,
         setFields: this.setElements,
+        initForm: this.setElements,
         getErrors: this.getErrors,
         getInput: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
-        getSelect: fieldName => this.getInput(INPUTS_TYPES.input, fieldName), // todo add type select
+        getSelect: fieldName => this.getInput(INPUTS_TYPES.input, fieldName),
         getCheckbox: fieldName => this.getInput(INPUTS_TYPES.checkbox, fieldName),
         getRadio: (fieldName, value) => this.getInput(INPUTS_TYPES.radio, fieldName, value),
         getCheckboxMulti: (fieldName, value) =>
@@ -108,7 +122,7 @@ export const formWrapper = WrappedComponent => {
         totalErrors: 0
       };
       Object.keys(state.elements).forEach(e => {
-        const elementErrors = this.formElementValid(e); //deepClone
+        const elementErrors = this.formElementValid(e);
         if (elementErrors) {
           _errors[e] = elementErrors;
           _errors.totalErrors += elementErrors.length;
@@ -121,7 +135,7 @@ export const formWrapper = WrappedComponent => {
     values = () => {
       const _values = {};
       Object.keys(this.state.elements).forEach(e => {
-        _values[e] = this.state.elements[e].value; // deepClone
+        _values[e] = this.state.elements[e].value;
       });
       return _values;
     };
@@ -130,7 +144,7 @@ export const formWrapper = WrappedComponent => {
       const clearElementsObject = {};
       Object.keys(this.state.elements).forEach(e => {
         clearElementsObject[e] = {
-          ...this.state.elements[e], // deepClone
+          ...this.state.elements[e],
           value: transformFalseValue(this.state.elements[e].value)
         };
       });
@@ -147,8 +161,9 @@ export const formWrapper = WrappedComponent => {
     setValues = values => {
       const elementsWithValues = {};
       Object.keys(this.state.elements).forEach(e => {
+        // todo: refactor change order
         elementsWithValues[e] = {
-          ...this.state.elements[e], // deepClone
+          ...this.state.elements[e],
           value: values[e] || transformFalseValue(this.state.elements[e].value)
         };
       });
@@ -162,15 +177,18 @@ export const formWrapper = WrappedComponent => {
       });
     };
 
-    setElements = elements => {
-      const elementsTransform = {};
-      Object.keys(elements).forEach(e => {
-        elementsTransform[e] = this.createFormElement(e, elements[e]);
-      });
-      this.setState({
-        elements: elementsTransform,
-        ...initialState,
-        loading: false
+    setElements = (elements, validationWrite = false) => {
+      this.setState(prevState => {
+        const elementsTransform = prevState.elements || {};
+        Object.keys(elements).forEach(e => {
+          elementsTransform[e] = this.createFormElement(e, elements[e]);
+        });
+        return {
+          elements: elementsTransform,
+          ...initialState,
+          init: false,
+          isValidationWrite: validationWrite
+        };
       });
     };
 
@@ -193,7 +211,7 @@ export const formWrapper = WrappedComponent => {
     };
 
     formElementOnChange = (e, elementName) => {
-      let element = this.getFormField(elementName); // deepClone
+      let element = this.getFormField(elementName);
       let value = null;
       switch (e.target.type) {
         case INPUTS_TYPES.checkbox:
@@ -213,8 +231,8 @@ export const formWrapper = WrappedComponent => {
     };
 
     saveFormElement = (elementName, data) => {
-      let elements = this.state.elements; // deepClone
-      let errors = this.state.errors; // deepClone
+      let elements = this.state.elements;
+      let errors = this.state.errors;
       delete elements[elementName];
 
       this.setState(
