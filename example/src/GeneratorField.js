@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formWrapper } from "../../src/lib/FormWrapper";
 import { isRequired } from "../../src/lib/Validator";
-import { maxstringvalidator, minstringvalidator } from "./validators";
 
 export class GeneratorFieldComponent extends React.Component {
   static propTypes = {
@@ -34,9 +33,7 @@ export class GeneratorFieldComponent extends React.Component {
   setFields() {
     this.props.form.initForm(
       {
-        fieldName: {
-          validators: [minstringvalidator, maxstringvalidator, isRequired]
-        }
+        fieldName: {}
       },
       true
     );
@@ -73,11 +70,7 @@ export class GeneratorFieldComponent extends React.Component {
             id="btn-add-field"
             onClick={e => {
               e.preventDefault();
-              this.addField(
-                form.elements.fieldName &&
-                  form.elements.fieldName.value.length &&
-                  form.elements.fieldName.value
-              );
+              this.addField(form.elements.fieldName && form.elements.fieldName.value);
             }}
           >
             Add Field by input

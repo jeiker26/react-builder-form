@@ -35,11 +35,16 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 
-### Step 2: Add the fields of your form in the "componentDidMount"
+### Step 2: Add the fields and initialize the form.
 ```jsx
   ...
-  componentDidMount() {
-    this.props.form.setFields({
+  constructor(props) {
+    super(props);
+    this.setFields();
+  }
+
+  setFields() {
+    this.props.form.initForm({
       name: {
         defaultValue: "asdasd",
         validators: [minstringvalidator, maxstringvalidator, isRequired]
@@ -60,10 +65,13 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
         defaultValue: true,
         validators: [isRequired]
       }
-    });
+    },
+    true
+    );
   }
   ...
 ```
+``initForm`` second param optional: true for validation fields in real time || false only in submit state
 
 
 ### Step 3: Do not forget, add to each of the fields of your html form your handler (props.form.getInput, props.form.getSelect, ...)
@@ -71,9 +79,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
   ...
   render() {
     const { form } = this.props;
-    return form.loading ? (
-      <p>Loading...</p>
-    ) : (
+    return (
       <div>
         <form onSubmit={form.submit}>
           Name:
@@ -143,7 +149,6 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 - You can also get all the errors, with props `props.form.errors`.
-- Or enable error detection in real time, putting props `props.form.validationWriteWithoutSubmit()` in `componentDidMount()`.
 
 ## Examples 
 
@@ -151,7 +156,12 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```jsx
 import { formWrapper } from "@jkr26/react-forms-builder-logic";
 class BasicFormComponent extends React.Component {
-	componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.setFields();
+  }
+
+	setFields() {
 		this.props.form.setFields({
 			name: {
 				defaultValue: "RaAlRo",
@@ -170,22 +180,19 @@ class BasicFormComponent extends React.Component {
 
 	render() {
 		const { form } = this.props;
-		return form.loading ?
-            (<p>Loading...</p>)
-            :
-            (<div>
-                <form onSubmit={form.submit}>
-                    <input type="text" {...form.getInput("name")} />
-                    
-                    {/** Get field errors */}
-                    {/** Way 1 */}
-                    {form.errors.name && form.errors.name.map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
-                    {/** Way 2 */}
-                    {form.getErrors("name").map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
+		return (<div>
+              <form onSubmit={form.submit}>
+                  <input type="text" {...form.getInput("name")} />
+                  
+                  {/** Get field errors */}
+                  {/** Way 1 */}
+                  {form.errors.name && form.errors.name.map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
+                  {/** Way 2 */}
+                  {form.getErrors("name").map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
 
-                    <button>Submit</button>
-                </form>
-            </div>);
+                  <button>Submit</button>
+              </form>
+          </div>);
 	}
 
 }

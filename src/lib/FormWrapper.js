@@ -22,7 +22,7 @@ export const formWrapper = WrappedComponent => {
     constructor(props) {
       super(props);
       this.state = {
-        elements: null,
+        elements: {},
         isValidationWrite: false,
         ...initialState
       };
@@ -193,7 +193,7 @@ export const formWrapper = WrappedComponent => {
     };
 
     /* 3 - Core FormField */
-    createFormElement(name, { defaultValue, validators }) {
+    createFormElement(name, { defaultValue, validators = [] }) {
       return {
         defaultValue,
         validators,
