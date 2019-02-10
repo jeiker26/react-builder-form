@@ -12,18 +12,20 @@ import {
 } from "./FormWrapper.hoc.mock";
 import { isRequired, IS_REQUIRED_ERROR } from "../../src/lib/Validator";
 
+// todo: set news fields test
+
 describe("FormWrapper suite", () => {
-  it("should return loading state", () => {
+  it("should return form not initialized", () => {
     const wrapper = shallow(<FormMock />);
-    expect(wrapper.props().form.loading).toBe(true);
+    expect(wrapper.props().form.init).toBe(true);
   });
 
-  it("should return loading state", () => {
+  it("should return form initialized", () => {
     const wrapper = shallow(<FormMock />);
     wrapper.props().form.setFields({
       name: {}
     });
-    expect(wrapper.props().form.loading).toBe(false);
+    expect(wrapper.props().form.init).toBe(false);
   });
 
   it("should load default values", () => {

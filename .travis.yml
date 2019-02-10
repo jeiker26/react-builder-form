@@ -20,7 +20,6 @@ after_success:
 branches:
   only:
     - master
-    - develop
 
 
 
