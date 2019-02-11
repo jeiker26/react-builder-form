@@ -5,8 +5,8 @@ import { isRequired } from "../../src/lib/Validator";
 import {
   emailValidator,
   equalValidatorEmail,
-  maxstringvalidator,
-  minstringvalidator
+  maxStringValidator,
+  minStringValidator
 } from "./validators";
 
 export class CompleteFormComponent extends React.Component {
@@ -37,7 +37,7 @@ export class CompleteFormComponent extends React.Component {
       {
         name: {
           defaultValue: "asd",
-          validators: [minstringvalidator, maxstringvalidator, isRequired]
+          validators: [minStringValidator, maxStringValidator, isRequired]
         },
         age: {
           defaultValue: "2017-06-01",

@@ -6,7 +6,7 @@ import {
   MOCKS_NEW_VALUES,
   MOCKS_CLEAR_VALUES,
   FIELDS_ONCHANGE_MOCKS,
-  minstringvalidator,
+  minStringValidator,
   MINSTRINGVALIDATOR_ERROR,
   FakeComponent
 } from "./FormWrapper.hoc.mock";
@@ -177,14 +177,14 @@ describe("FormWrapper suite", () => {
     const wrapper = shallow(<FormMock />);
     wrapper.props().form.setFields({
       x: {
-        validators: [isRequired, minstringvalidator]
+        validators: [isRequired, minStringValidator]
       },
       y: {
         validators: [isRequired]
       },
       z: {
         defaultValue: "fooVar",
-        validators: [isRequired, minstringvalidator]
+        validators: [isRequired, minStringValidator]
       }
     });
 
@@ -198,13 +198,13 @@ describe("FormWrapper suite", () => {
   });
 });
 
-describe("minstringvalidator suite", () => {
+describe("minStringValidator suite", () => {
   it("should return error", () => {
-    expect(minstringvalidator.exec("as")).toEqual(MINSTRINGVALIDATOR_ERROR);
+    expect(minStringValidator.exec("as")).toEqual(MINSTRINGVALIDATOR_ERROR);
   });
 
   it("should return not error", () => {
-    expect(minstringvalidator.exec("Eass")).toBe(false);
+    expect(minStringValidator.exec("Eass")).toBe(false);
   });
 });
 
