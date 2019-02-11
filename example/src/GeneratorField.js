@@ -61,6 +61,7 @@ export class GeneratorFieldComponent extends React.Component {
 
   render() {
     const { form } = this.props;
+    console.log(form);
     return (
       <div>
         <form onSubmit={form.submit}>

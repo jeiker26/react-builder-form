@@ -1,5 +1,22 @@
 import React from "react";
+import { shape, bool, func, any } from "prop-types";
 import { transformFalseValue, insertOrDeleteElemntArray, convertIntoArray } from "./utils";
+
+export const formShape = shape({
+  setFields: func.isRequired,
+  initForm: func.isRequired,
+  setValues: func.isRequired,
+  clear: func.isRequired,
+  getErrors: func.isRequired,
+  getInput: func.isRequired,
+  getSelect: func.isRequired,
+  getCheckbox: func.isRequired,
+  getRadio: func.isRequired,
+  getCheckboxMulti: func.isRequired,
+  isValid: bool.isRequired,
+  values: any,
+  errors: any
+});
 
 export const INPUTS_TYPES = {
   radio: "radio",
@@ -43,7 +60,7 @@ export const formWrapper = WrappedComponent => {
         return {};
       }
 
-      const field = this.getFormField(fieldName); // todo: refactor
+      const field = this.getFormField(fieldName);
 
       // Check error field
       if (!field) {
@@ -169,7 +186,7 @@ export const formWrapper = WrappedComponent => {
           // Check error field
           if (!field) {
             console.error(
-              `[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`
+              `[FORMWRAPPER] The field "${fieldName}" does not exist or it is starting.`
             );
           }
 

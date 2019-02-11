@@ -36,7 +36,7 @@ export class CompleteFormComponent extends React.Component {
     this.props.form.initForm(
       {
         name: {
-          defaultValue: "asdasd",
+          defaultValue: "asd",
           validators: [minstringvalidator, maxstringvalidator, isRequired]
         },
         age: {
@@ -92,6 +92,7 @@ export class CompleteFormComponent extends React.Component {
 
   render() {
     const { form } = this.props;
+    console.log(form);
     return (
       <div>
         <form onSubmit={form.submit}>
