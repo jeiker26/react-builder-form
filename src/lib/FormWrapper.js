@@ -1,22 +1,5 @@
 import React from "react";
-import { shape, bool, func, any } from "prop-types";
 import { transformFalseValue, insertOrDeleteElemntArray, convertIntoArray } from "./utils";
-
-export const formShape = shape({
-  setFields: func.isRequired,
-  initForm: func.isRequired,
-  setValues: func.isRequired,
-  clear: func.isRequired,
-  getErrors: func.isRequired,
-  getInput: func.isRequired,
-  getSelect: func.isRequired,
-  getCheckbox: func.isRequired,
-  getRadio: func.isRequired,
-  getCheckboxMulti: func.isRequired,
-  isValid: bool.isRequired,
-  values: any,
-  errors: any
-});
 
 export const INPUTS_TYPES = {
   radio: "radio",
