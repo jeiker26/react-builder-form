@@ -149,7 +149,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 
 - You can also get all the errors, with props `props.form.errors`.
 
-## Examples 
+## [Examples] (https://github.com/jeiker26/react-builder-form-demos.git) In progress
 
 * [Basics]
 ```jsx
@@ -195,7 +195,7 @@ class BasicFormComponent extends React.Component {
 
 export const BasicForm = formWrapper(BasicFormComponent);
 ```
-* [Avanced Validation]
+* [Advanced]
 ```jsx
 import { formWrapper } from "@jkr26/react-forms-builder-logic";
 export class CompleteFormComponent extends React.Component {
@@ -367,9 +367,6 @@ export class CompleteFormComponent extends React.Component {
 export const CompleteForm = formWrapper(CompleteFormComponent);
 ```
 
-### Usage
-
-
 ### Doc
 #### Functions
 | function | params | description |
@@ -396,6 +393,61 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 | `values` | `{ element: String, ... }` | `{}` | Values by fields. |
 | `isValid` | `boolean` | `false`| All fields comply with their validations. After `submit()`. |
 | `init` | `boolean` | `true` | `false`, when the form is ready. After `initForm()`.|
+
+
+---
+
+
+## Validations
+### Example
+The validation "isRequired" is included in the library.
+
+Other examples of validation:
+```jsx
+import { Validator } from "@jkr26/react-forms-builder-logic";
+export const startWithJJ = new Validator(value => {
+  const error = "The element must start with jj.";
+  if (value && /^jj/.test(value)) {
+    return false;
+  }
+  return error;
+});
+
+export const maxstringvalidator = new Validator(value => {
+  const error = "The item must have less than 10 characters.";
+  if (value && value.length < 10) {
+    return false;
+  }
+  return error;
+});
+
+export const emailValidator = new Validator(value => {
+  const error = "Invalid email";
+  const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (value && emailPattern.test(String(value).toLowerCase())) {
+    return false;
+  }
+  return error;
+});
+
+export const equalValidatorEmail = new Validator((value, formFields) => {
+  const error = "THE EMAIL DOES NOT MATCH.";
+  if (value && value === formFields.email.value) {
+    return false;
+  }
+  return error;
+});
+
+```
+The validators work in a very simple way, as the first parameter they receive the value of the element and as a second parameter they receive all the values ​​of the form, as an object: `formFields = {
+ name: "John",
+ age: "33",
+ email: "john@example.com",
+ repeatEmail: "john"
+}`
+
+
+
 
 ---
 

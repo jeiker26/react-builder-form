@@ -168,7 +168,7 @@ export const formWrapper = WrappedComponent => {
 
           // Check error field
           if (!field) {
-            console.info(
+            console.error(
               `[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`
             );
           }
@@ -193,6 +193,9 @@ export const formWrapper = WrappedComponent => {
       this.setState(prevState => {
         const elementsTransform = prevState.elements || {};
         Object.keys(elements).forEach(e => {
+          if (elementsTransform.hasOwnProperty(e)) {
+            console.error(`[FORMWRAPPER] The "${e}" field already exists in the form.`);
+          }
           elementsTransform[e] = this.createFormElement(e, elements[e]);
         });
         return {
