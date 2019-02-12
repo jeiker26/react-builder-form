@@ -32,8 +32,6 @@ export const formWrapper = WrappedComponent => {
         isValidationWrite: false,
         ...initialState
       };
-      this.childrenRender = WrappedComponent.prototype.render;
-      WrappedComponent.prototype.render = () => <p>Loading...</p>;
     }
 
     /** Options/configuration */
@@ -204,10 +202,6 @@ export const formWrapper = WrappedComponent => {
           }
           elementsTransform[e] = this.createFormElement(e, elements[e]);
         });
-
-        if (prevState.init) {
-          WrappedComponent.prototype.render = this.childrenRender;
-        }
 
         return {
           elements: elementsTransform,

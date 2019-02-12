@@ -9,6 +9,7 @@ notifications:
 
 before_install:
   - pip install --user codecov
+  - sbt clean coverage test
 install:
   - npm install
 script:
@@ -16,10 +17,12 @@ script:
   - npm run test:ci
 after_success:
   - codecov --file coverage/lcov.info --disable search
+  - sbt coveralls
 
 branches:
   only:
     - master
+    - develop
 
 
 
