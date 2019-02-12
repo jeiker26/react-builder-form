@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { GeneratorFields } from "./GeneratorField";
+import { CompleteForm } from "./CompleteForm";
 
-ReactDOM.render(<GeneratorFields />, document.getElementById("root"));
+ReactDOM.render(<CompleteForm />, document.getElementById("root"));
 
 module.hot.accept();

@@ -4,7 +4,7 @@ import { Validator, isRequired } from "../../src/lib/Validator";
 export const FIELDS_MOCKS = {
   name: {
     defaultValue: "asdasd",
-    validators: [minstringvalidator, isRequired]
+    validators: [minStringValidator, isRequired]
   },
   age: {
     defaultValue: "2017-06-01", // TODO: importante apuntar formato de la fecha
@@ -74,7 +74,7 @@ export const FormMock = formWrapper(FakeComponent);
 
 /** Mocks Validators */
 export const MINSTRINGVALIDATOR_ERROR = "El elemento debe tener más de 3 caracteres.";
-export const minstringvalidator = new Validator(value => {
+export const minStringValidator = new Validator(value => {
   const error = MINSTRINGVALIDATOR_ERROR;
   if (value && value.length > 3) {
     return false;

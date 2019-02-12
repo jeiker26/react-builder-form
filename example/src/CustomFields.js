@@ -2,12 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formWrapper } from "../../src/lib/FormWrapper";
 import { isRequired } from "../../src/lib/Validator";
-import {
-  emailValidator,
-  equalValidatorEmail,
-  maxStringValidator,
-  minStringValidator
-} from "./validators";
+import { emailValidator, equalValidatorEmail, minStringValidator } from "./validators";
 
 export class CompleteFormComponent extends React.Component {
   static propTypes = {
@@ -37,7 +32,7 @@ export class CompleteFormComponent extends React.Component {
       {
         name: {
           defaultValue: "asd",
-          validators: [minStringValidator, maxStringValidator, isRequired]
+          validators: [minStringValidator, maxstringvalidator, isRequired]
         },
         age: {
           defaultValue: "2017-06-01",
@@ -92,6 +87,7 @@ export class CompleteFormComponent extends React.Component {
 
   render() {
     const { form } = this.props;
+    console.log(form);
     return (
       <div>
         <form onSubmit={form.submit}>

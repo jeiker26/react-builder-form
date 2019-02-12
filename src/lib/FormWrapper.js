@@ -9,6 +9,12 @@ export const INPUTS_TYPES = {
   select: "select"
 };
 
+const ERRORS = {
+  formNotInit: () => console.info(`[FORMWRAPPER] The form has not been started.`),
+  fieldNotExist: e =>
+    console.error(`[FORMWRAPPER] The field "${e}" does not exist or it is starting.`)
+};
+
 const initialState = {
   errors: {},
   values: {},
@@ -39,15 +45,15 @@ export const formWrapper = WrappedComponent => {
     getInput = (type = INPUTS_TYPES.input, fieldName, value = false) => {
       // Check error init
       if (this.state.init) {
-        console.info(`[FORMWRAPPER] The form has not been started.`);
+        ERRORS.formNotInit();
         return {};
       }
 
-      const field = this.getFormField(fieldName); // todo: refactor
+      const field = this.getFormField(fieldName);
 
       // Check error field
       if (!field) {
-        console.info(`[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`);
+        ERRORS.fieldNotExist(fieldName);
         return {};
       }
 
@@ -168,9 +174,7 @@ export const formWrapper = WrappedComponent => {
 
           // Check error field
           if (!field) {
-            console.error(
-              `[FORMWRAPPER] The field "${fieldName}" does not exist o se esta iniciando.`
-            );
+            ERRORS.fieldNotExist(fieldName);
           }
 
           elementsWithValues[fieldName] = {
@@ -198,6 +202,7 @@ export const formWrapper = WrappedComponent => {
           }
           elementsTransform[e] = this.createFormElement(e, elements[e]);
         });
+
         return {
           elements: elementsTransform,
           ...initialState,

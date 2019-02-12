@@ -1,6 +1,6 @@
 import { Validator } from "../../src/lib/Validator";
 
-export const minstringvalidator = new Validator(value => {
+export const minStringValidator = new Validator(value => {
   const error = "El elemento debe tener más de 3 caracteres.";
   if (value && value.length > 3) {
     return false;
@@ -16,7 +16,7 @@ export const startWithJJ = new Validator(value => {
   return error;
 });
 
-export const maxstringvalidator = new Validator(value => {
+export const maxStringValidator = new Validator(value => {
   const error = "El elemento debe tener menos de 10 caracteres.";
   if (value && value.length < 10) {
     return false;

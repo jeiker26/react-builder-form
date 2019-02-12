@@ -2,7 +2,7 @@
 [![build status][travis-image]][travis-url]
 [![node version][node-image]][node-url]
 
-[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=develop
+[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=master
 [travis-url]: https://travis-ci.org/jeiker26/react-builder-form
 [node-image]: https://img.shields.io/badge/node.js-%3E=5.4-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
@@ -47,7 +47,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
     this.props.form.initForm({
       name: {
         defaultValue: "asdasd",
-        validators: [minstringvalidator, maxstringvalidator, isRequired]
+        validators: [minStringValidator, maxStringValidator, isRequired]
       },
       age: {
         defaultValue: "2017-06-01",
@@ -208,7 +208,7 @@ export class CompleteFormComponent extends React.Component {
     this.props.form.initForm({
       name: {
         defaultValue: "asdasd",
-        validators: [minstringvalidator, maxstringvalidator, isRequired]
+        validators: [minStringValidator, maxStringValidator, isRequired]
       },
       age: {
         defaultValue: "2017-06-01",
@@ -413,7 +413,7 @@ export const startWithJJ = new Validator(value => {
   return error;
 });
 
-export const maxstringvalidator = new Validator(value => {
+export const maxStringValidator = new Validator(value => {
   const error = "The item must have less than 10 characters.";
   if (value && value.length < 10) {
     return false;

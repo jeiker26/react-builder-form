@@ -5,8 +5,6 @@ notifications:
   email:
   - jesusgraficap@gmail.com
 
-
-
 before_install:
   - pip install --user codecov
 install:
@@ -20,6 +18,7 @@ after_success:
 branches:
   only:
     - master
+    - develop
 
 
 
