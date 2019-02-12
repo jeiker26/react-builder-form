@@ -9,6 +9,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master)
 [![license](https://img.shields.io/github/license/jeiker26/react-builder-form.svg)](https://github.com/jeiker26/react-builder-form)
 
+[![NPM dependencies][npm-dependencies-image]][npm-dependencies-url] [![Last commit][last-commit-image]][last-commit-url] [![Last release][release-image]][release-url] 
+
+[![NPM downloads][npm-downloads-image]][npm-downloads-url]
+
 Small library to simplify the use of forms in React.
 
 With a simple **higher**-**order** component (HOC), you can get:
@@ -457,3 +461,18 @@ The validators work in a very simple way, as the first parameter they receive th
 MIT License.
 
 ---
+
+
+[last-commit-image]: https://img.shields.io/github/last-commit/jeiker26/react-builder-form.svg
+[last-commit-url]: https://github.com/jeiker26/react-builder-form/commits
+
+[npm-downloads-image]: https://img.shields.io/npm/dm/@jkr26/react-forms-builder-logic.svg
+[npm-downloads-url]: https://www.npmjs.com/package/@jkr26/react-forms-builder-logic
+[npm-dependencies-image]: https://img.shields.io/david/jeiker26/react-builder-form.svg
+[npm-dependencies-url]: https://david-dm.org/jeiker26/react-builder-form
+[quality-gate-image]: https://sonarcloud.io/api/project_badges/measure?project=jeiker26_react-builder-form&metric=alert_status
+[quality-gate-url]: https://sonarcloud.io/dashboard?id=jeiker26_react-builder-form
+[release-image]: https://img.shields.io/github/release-date/jeiker26/react-builder-form.svg
+[release-url]: https://github.com/jeiker26/react-builder-form/releases
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[standard-url]: http://standardjs.com/
