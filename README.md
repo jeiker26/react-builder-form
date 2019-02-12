@@ -6,7 +6,7 @@
 [travis-url]: https://travis-ci.org/jeiker26/react-builder-form
 [node-image]: https://img.shields.io/badge/node.js-%3E=5.4-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/
-[![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg)](https://coveralls.io/github/jeiker26/react-builder-form)
+[![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master)
 [![license](https://img.shields.io/github/license/jeiker26/react-builder-form.svg)](https://github.com/jeiker26/react-builder-form)
 
 Small library to simplify the use of forms in React.

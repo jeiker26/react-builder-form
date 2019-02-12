@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+## [0.2.1] - 2019-02-12
+
+### Add
+- Config coverall.
 
 ## [0.2.1] - 2019-02-12
 
