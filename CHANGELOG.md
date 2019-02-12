@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+
+## [1.0.0] - 2019-02-12
+
+### Changed
+- Change "isValid" props to the "isValidAfterSubmit". 
+  "isValidAfterSubmit": This property checks that the form is valid and has been submitted. 
+  "isValid": This property that the fields are valid.
+
+
 ## [0.2.1] - 2019-02-12
 
 ### Add
