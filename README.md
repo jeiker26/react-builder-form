@@ -2,7 +2,7 @@
 [![build status][travis-image]][travis-url]
 [![node version][node-image]][node-url]
 
-[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=develop
+[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=master
 [travis-url]: https://travis-ci.org/jeiker26/react-builder-form
 [node-image]: https://img.shields.io/badge/node.js-%3E=5.4-green.svg?style=flat-square
 [node-url]: http://nodejs.org/download/

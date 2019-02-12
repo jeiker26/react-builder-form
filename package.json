@@ -1,7 +1,7 @@
 {
   "name": "@jkr26/react-forms-builder-logic",
   "description": "Small library to simplify the use of forms in React.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "keywords": [
     "react form",
     "form builder",
@@ -25,6 +25,7 @@
     "test": "BABEL_ENV=test jest  --watchAll --no-cache --config ./jest.config.json",
     "test:ci": "BABEL_ENV=test jest --no-cache --config ./jest.pro.config.json --runInBand",
     "test:coverage": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
+    "coveralls": "BABEL_ENV=test jest --coverage --no-cache --config ./jest.config.json && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "start:example": "webpack-dev-server --config ./webpack.config.js --mode development",
     "release": "npm publish --access=public"
   },
@@ -36,8 +37,8 @@
     "@babel/helper-module-imports": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.1.2",
@@ -46,6 +47,7 @@
     "babel-plugin-macros": "^2.2.2",
     "babel-plugin-transform-define": "^1.3.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "coveralls": "^3.0.2",
     "cross-env": "^5.0.1",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.8.0",
