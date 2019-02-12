@@ -11,6 +11,7 @@ export class CompleteFormComponent extends React.Component {
       initForm: PropTypes.func,
       setValues: PropTypes.func,
       isValid: PropTypes.bool,
+      isValidAfterSubmit: PropTypes.bool,
       values: PropTypes.any,
       clear: PropTypes.func
     })
@@ -22,7 +23,7 @@ export class CompleteFormComponent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.form.isValid) {
+    if (this.props.form.isValidAfterSubmit) {
       console.log("Send data:", this.props.form.values);
     }
   }
@@ -87,7 +88,6 @@ export class CompleteFormComponent extends React.Component {
 
   render() {
     const { form } = this.props;
-    console.log(form);
     return (
       <div>
         <form onSubmit={form.submit}>

@@ -118,7 +118,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```jsx
     ...
     componentDidUpdate() {
-        if (this.props.form.isValid) {
+        if (this.props.form.isValidAfterSubmit) {
         console.log("Send data:", this.props.form.values);
         }
     }
@@ -169,7 +169,7 @@ class BasicFormComponent extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!this.props.form.isValid) {
+		if (!this.props.form.isValidAfterSubmit) {
             console.log("Form errors:", this.props.form.errors);
             return;
         }
@@ -244,7 +244,7 @@ export class CompleteFormComponent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.form.isValid) {
+    if (this.props.form.isValidAfterSubmit) {
       console.log("Send data:", this.props.form.values);
     }
   }
@@ -376,8 +376,8 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 | `initForm()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }`, `boolean` | Add the init form fields, along with their default value and validations. The second parameter indicates validations in real time, by default false. Method used in the `contructor()` |
 | `setFields()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }` | Add the form fields, along with their default value and validations. |
 | `setValues()` | `{ nameField1: "foo", nameField2: "var", nameFieldN: "test" }` | Set values. The form must have the `loading` to `false`. |
-| `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValid`.
-| `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValid`
+| `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValidAfterSubmit`.
+| `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValidAfterSubmit`
 | `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
 | `getInput()` | `nameField` | Get input attributes. Only text, number and date.
 | `getSelect()` | `nameField` | Get input attributes. Only for select.
@@ -393,7 +393,8 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 |--|--|--|--|
 | `errors` | `{ elementKey: String[], ... }` | `{}` | Errors by fields. |
 | `values` | `{ element: String, ... }` | `{}` | Values by fields. |
-| `isValid` | `boolean` | `false`| All fields comply with their validations. After `submit()`. |
+| `isValidAfterSubmit` | `boolean` | `false`| All fields comply with their validations. After `submit()`. |
+| `isValid` | `boolean` | `false`| All fields comply with their validations in real time. Example: `<button style={{ backgroundColor: form.isValid ? "green" : "red" }}>Submit</button>` |
 | `init` | `boolean` | `true` | `false`, when the form is ready. After `initForm()`.|
 
 

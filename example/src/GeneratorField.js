@@ -10,6 +10,7 @@ export class GeneratorFieldComponent extends React.Component {
       initForm: PropTypes.func,
       setValues: PropTypes.func,
       isValid: PropTypes.bool,
+      isValidAfterSubmit: PropTypes.bool,
       values: PropTypes.any,
       clear: PropTypes.func
     })
@@ -25,7 +26,7 @@ export class GeneratorFieldComponent extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.form.isValid) {
+    if (this.props.form.isValidAfterSubmit) {
       console.log("Send data:", this.props.form.values);
     }
   }

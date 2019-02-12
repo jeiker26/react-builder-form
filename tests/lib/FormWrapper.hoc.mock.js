@@ -1,6 +1,17 @@
 import { formWrapper, INPUTS_TYPES } from "../../src/lib/FormWrapper";
 import { Validator, isRequired } from "../../src/lib/Validator";
 
+/** Mocks Validators */
+export const MINSTRINGVALIDATOR_ERROR = "El elemento debe tener más de 3 caracteres.";
+export const minStringValidator = new Validator(value => {
+  const error = MINSTRINGVALIDATOR_ERROR;
+  if (value && value.length > 3) {
+    return false;
+  }
+  return error;
+});
+
+/** Mocks form */
 export const FIELDS_MOCKS = {
   name: {
     defaultValue: "asdasd",
@@ -71,13 +82,3 @@ export const FIELDS_ONCHANGE_MOCKS = {
 
 export const FakeComponent = () => {};
 export const FormMock = formWrapper(FakeComponent);
-
-/** Mocks Validators */
-export const MINSTRINGVALIDATOR_ERROR = "El elemento debe tener más de 3 caracteres.";
-export const minStringValidator = new Validator(value => {
-  const error = MINSTRINGVALIDATOR_ERROR;
-  if (value && value.length > 3) {
-    return false;
-  }
-  return error;
-});
