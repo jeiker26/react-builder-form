@@ -20,7 +20,8 @@ const initialState = {
   values: {},
   isValid: false,
   init: true,
-  submited: false
+  submited: false,
+  _valuesFake: {}
 };
 
 export const formWrapper = WrappedComponent => {
