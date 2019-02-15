@@ -27,6 +27,7 @@ With a simple **higher**-**order** component (HOC), you can get:
 ## Examples.
 - [Simple Form](https://codesandbox.io/s/xpnyv4vpyo)
 - [Advanced Form](https://codesandbox.io/s/18vkn34l6j)
+- [Field Generator Form](https://codesandbox.io/s/w02lkn71vw)
 
 ## Getting Started
 
