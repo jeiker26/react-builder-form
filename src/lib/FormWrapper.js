@@ -223,7 +223,7 @@ export const formWrapper = WrappedComponent => {
       return {
         defaultValue,
         validators,
-        value: defaultValue,
+        value: defaultValue || transformFalseValue(defaultValue),
         onChange: e => this.formElementOnChange(e, name)
       };
     }
