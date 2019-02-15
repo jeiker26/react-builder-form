@@ -176,6 +176,7 @@ export const formWrapper = WrappedComponent => {
         // Check error field
         if (!field) {
           ERRORS.fieldNotExist(fieldName);
+          return;
         }
 
         elements[fieldName] = {

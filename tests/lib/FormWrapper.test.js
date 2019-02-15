@@ -1,5 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
+import * as sinon from "sinon";
 import {
   FormMock,
   FIELDS_MOCKS,
@@ -12,9 +13,20 @@ import {
 } from "./FormWrapper.hoc.mock";
 import { isRequired, IS_REQUIRED_ERROR } from "../../src/lib/Validator";
 
-// todo: set news fields test
-
 describe("FormWrapper suite", () => {
+  let sandbox;
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox();
+
+    sandbox.spy(console, "info");
+    sandbox.spy(console, "error");
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
   it("should return form not initialized", () => {
     const wrapper = shallow(<FormMock />);
     expect(wrapper.props().form.init).toBe(true);
@@ -47,6 +59,12 @@ describe("FormWrapper suite", () => {
     Object.keys(FIELDS_MOCKS).forEach(fieldName => {
       expect(wrapper.props().form.elements[fieldName].value).toEqual(MOCKS_NEW_VALUES[fieldName]);
     });
+
+    // set Values that not exists
+    wrapper.props().form.setValues({ xxx: "foo" });
+    expect(
+      console.error.calledWith(`[FORMWRAPPER] The field "xxx" does not exist or it is starting.`)
+    ).toBe(true);
   });
 
   it("should clear values", () => {
@@ -131,9 +149,18 @@ describe("FormWrapper suite", () => {
   });
 
   it("should get input interface", () => {
-    // todo: delete magic string
     const wrapper = shallow(<FormMock />);
+
+    // get input and form not init
+    const noInitForm = wrapper.props().form.getInput("name");
+    expect(noInitForm).toEqual({});
+
+    // Set fields
     wrapper.props().form.setFields(FIELDS_MOCKS);
+
+    // get input that not exists
+    const notExists = wrapper.props().form.getInput("xxx");
+    expect(notExists).toEqual({});
 
     // text
     const inputText = wrapper.props().form.getInput("name");
