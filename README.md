@@ -160,6 +160,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 - You can also get all the errors, with props `props.form.errors`.
 
 ## Examples. In progress
+- [![Simple Form](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/xpnyv4vpyo)
 
 * [Basics]
 ```jsx
