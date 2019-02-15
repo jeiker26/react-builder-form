@@ -40,7 +40,7 @@ describe("FormWrapper suite", () => {
     expect(wrapper.props().form.init).toBe(false);
   });
 
-  it("should load default values", () => {
+  it("should load default values and init form", () => {
     const wrapper = shallow(<FormMock />);
     wrapper.props().form.setFields(FIELDS_MOCKS);
 
@@ -49,6 +49,12 @@ describe("FormWrapper suite", () => {
         FIELDS_MOCKS[fieldName].defaultValue
       );
     });
+
+    // set Values that not exists
+    wrapper.props().form.setFields({ name: {} });
+    expect(
+      console.error.calledWith(`[FORMWRAPPER] The "name" field already exists in the form.`)
+    ).toBe(true);
   });
 
   it("should load set new values", () => {
