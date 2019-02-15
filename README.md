@@ -14,7 +14,7 @@
 [![NPM downloads][npm-downloads-image]][npm-downloads-url]
 
 [![code style: prettier](https://badgen.net/badge/code%20style/prettier/green)](https://github.com/prettier/prettier)
-[![minzipped size](https://badgen.net/bundlephobia/minzip/@jkr26/react-forms-builder-logic)]
+![minzipped size](https://badgen.net/bundlephobia/minzip/@jkr26/react-forms-builder-logic)
 [![PRs welcome](https://badgen.net/badge/PRs/welcome/green)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 
