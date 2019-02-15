@@ -15,9 +15,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+## [1.1.0] - 2019-02-15
+### Changed
+- Add Wrapper Form.
+
 
 ## [1.0.0] - 2019-02-12
-
 ### Changed
 - Change "isValid" props to the "isValidAfterSubmit". 
   "isValidAfterSubmit": This property checks that the form is valid and has been submitted. 
@@ -25,16 +28,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.2.1] - 2019-02-12
-
 ### Add
 - Config coverall.
 
 ## [0.2.1] - 2019-02-12
-
 ### Changed
 - Config build.
 
 ## [0.2.1] - 2019-02-11
-
 ### Added
 - Added in readme into to Validators.
