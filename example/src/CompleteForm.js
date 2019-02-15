@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formWrapper } from "../../src/lib/FormWrapper";
-import { isRequired } from "../../src/lib/Validator";
+import { formWrapper, Form, isRequired } from "../../src";
 import {
   emailValidator,
   equalValidatorEmail,
@@ -37,7 +36,7 @@ export class CompleteFormComponent extends React.Component {
     this.props.form.initForm(
       {
         name: {
-          defaultValue: "asd",
+          defaultValue: "asds",
           validators: [minStringValidator, maxStringValidator, isRequired]
         },
         age: {
@@ -96,7 +95,7 @@ export class CompleteFormComponent extends React.Component {
     const { form } = this.props;
     return (
       <div>
-        <form onSubmit={form.submit}>
+        <Form form={form}>
           Name:
           <input type="text" {...form.getInput("name")} />
           <br />
@@ -185,7 +184,7 @@ export class CompleteFormComponent extends React.Component {
           <button id="btn-set-values" onClick={this.hanleSetValues}>
             SetValues
           </button>
-        </form>
+        </Form>
       </div>
     );
   }

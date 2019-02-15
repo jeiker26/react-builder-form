@@ -1,13 +1,21 @@
 
 [![build status][travis-image]][travis-url]
-[![node version][node-image]][node-url]
+[![node version](https://badgen.net/badge/node/>=5.4/green)](http://nodejs.org/download/)
 
 [travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=master
 [travis-url]: https://travis-ci.org/jeiker26/react-builder-form
-[node-image]: https://img.shields.io/badge/node.js-%3E=5.4-green.svg?style=flat-square
-[node-url]: http://nodejs.org/download/
 [![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master)
 [![license](https://img.shields.io/github/license/jeiker26/react-builder-form.svg)](https://github.com/jeiker26/react-builder-form)
+
+[![NPM dependencies][npm-dependencies-image]][npm-dependencies-url] [![Last commit][last-commit-image]][last-commit-url]
+
+[![NPM downloads][npm-downloads-image]][npm-downloads-url]
+
+[![code style: prettier](https://badgen.net/badge/code%20style/prettier/green)](https://github.com/prettier/prettier)
+![minzipped size](https://badgen.net/bundlephobia/minzip/@jkr26/react-forms-builder-logic)
+[![PRs welcome](https://badgen.net/badge/PRs/welcome/green)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+
 
 Small library to simplify the use of forms in React.
 
@@ -27,7 +35,7 @@ npm i --save @jkr26/react-forms-builder-logic
 
 ### Step 1: Create your component and do the HOC
 ```jsx
-import { formWrapper } from "@jkr26/react-forms-builder-logic";
+import { formWrapper, Form } from "@jkr26/react-forms-builder-logic";
 
 class ExampleFormComponent extends React.Component {
   ...
@@ -82,7 +90,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
     const { form } = this.props;
     return (
       <div>
-        <form onSubmit={form.submit}>
+        <Form form={form}>
           Name:
           <input type="text" {...form.getInput("name")} />
         
@@ -99,7 +107,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
           <input type="checkbox" {...form.getCheckbox("policyPrivacy")} />
           
           <button>Submit</button>
-        </form>
+        </Form>
       </div>
     );
   }
@@ -107,10 +115,10 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 
-### Step 4: In submit
+### Step 4: Wrapper form html
 ```jsx
     ...
-    <form onSubmit={form.submit}>
+    <Form form={form}>
     ...
 ```
 
@@ -130,7 +138,7 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
     ...
     render() {
         ...
-        <form onSubmit={form.submit}>
+        <Form form={form}>
           Name:
           <input type="text" {...form.getInput("name")} />
           {form.getErrors("name").map(e => (
@@ -151,11 +159,11 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 
 - You can also get all the errors, with props `props.form.errors`.
 
-## [Examples] (https://github.com/jeiker26/react-builder-form-demos.git) In progress
+## Examples. In progress
 
 * [Basics]
 ```jsx
-import { formWrapper } from "@jkr26/react-forms-builder-logic";
+import { formWrapper, Form } from "@jkr26/react-forms-builder-logic";
 class BasicFormComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -179,7 +187,7 @@ class BasicFormComponent extends React.Component {
 	render() {
 		const { form } = this.props;
 		return (<div>
-              <form onSubmit={form.submit}>
+              <Form form={form}>
                   <input type="text" {...form.getInput("name")} />
                   
                   {/** Get field errors */}
@@ -189,7 +197,7 @@ class BasicFormComponent extends React.Component {
                   {form.getErrors("name").map(e  => (<span  key={e}  style={{color:  "red"}}>{e}</span>))}
 
                   <button>Submit</button>
-              </form>
+              </Form>
           </div>);
 	}
 
@@ -199,7 +207,7 @@ export const BasicForm = formWrapper(BasicFormComponent);
 ```
 * [Advanced]
 ```jsx
-import { formWrapper } from "@jkr26/react-forms-builder-logic";
+import { formWrapper, Form } from "@jkr26/react-forms-builder-logic";
 export class CompleteFormComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -271,7 +279,7 @@ export class CompleteFormComponent extends React.Component {
     const { form } = this.props;
     return (
       <div>
-        <form onSubmit={form.submit}>
+        <Form form={form}>
           Name:
           <input type="text" {...form.getInput("name")} />
           <br />
@@ -360,7 +368,7 @@ export class CompleteFormComponent extends React.Component {
           <button id="btn-set-values" onClick={this.hanleSetValues}>
             SetValues
           </button>
-        </form>
+        </Form>
       </div>
     );
   }
@@ -377,7 +385,6 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 | `setFields()` | `{ exampleFieldName: { defaultValue: "foo", validators: [Validator1, Validator2, ValidatorN ] } }` | Add the form fields, along with their default value and validations. |
 | `setValues()` | `{ nameField1: "foo", nameField2: "var", nameFieldN: "test" }` | Set values. The form must have the `loading` to `false`. |
 | `clear()` | `no params` | Set default values ​​for `errors`, `values` ​​and `isValidAfterSubmit`.
-| `submit()` | `no params` | Check all the validators of all the fields and set the values ​​of the form: `values`, `errors` and `isValidAfterSubmit`
 | `getErrors()` | `nameField` | Get the errors of a field. Returns an error array or an empty one.
 | `getInput()` | `nameField` | Get input attributes. Only text, number and date.
 | `getSelect()` | `nameField` | Get input attributes. Only for select.
@@ -397,6 +404,14 @@ export const CompleteForm = formWrapper(CompleteFormComponent);
 | `isValid` | `boolean` | `false`| All fields comply with their validations in real time. Example: `<button style={{ backgroundColor: form.isValid ? "green" : "red" }}>Submit</button>` |
 | `init` | `boolean` | `true` | `false`, when the form is ready. After `initForm()`.|
 
+
+#### Component Form
+Although the philosophy is not to create components, for the best control of the form we had to create a Form component to guarantee the load cycles and the alerts of uncontrolled components when they change to controlled:
+```jsx
+    ...
+    <Form form={this.props.form}>
+    ...
+```
 
 ---
 
@@ -457,3 +472,16 @@ The validators work in a very simple way, as the first parameter they receive th
 MIT License.
 
 ---
+
+
+[last-commit-image]: https://img.shields.io/github/last-commit/jeiker26/react-builder-form.svg
+[last-commit-url]: https://github.com/jeiker26/react-builder-form/commits
+
+[npm-downloads-image]: https://img.shields.io/npm/dm/@jkr26/react-forms-builder-logic.svg
+[npm-downloads-url]: https://www.npmjs.com/package/@jkr26/react-forms-builder-logic
+[npm-dependencies-image]: https://img.shields.io/david/jeiker26/react-builder-form.svg
+[npm-dependencies-url]: https://david-dm.org/jeiker26/react-builder-form
+[release-image]: https://img.shields.io/github/release-date/jeiker26/react-builder-form.svg
+[release-url]: https://github.com/jeiker26/react-builder-form/releases
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[standard-url]: http://standardjs.com/

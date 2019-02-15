@@ -20,7 +20,8 @@ const initialState = {
   values: {},
   isValid: false,
   init: true,
-  submited: false
+  submited: false,
+  _valuesFake: {}
 };
 
 export const formWrapper = WrappedComponent => {
@@ -175,6 +176,7 @@ export const formWrapper = WrappedComponent => {
         // Check error field
         if (!field) {
           ERRORS.fieldNotExist(fieldName);
+          return;
         }
 
         elements[fieldName] = {
@@ -204,6 +206,7 @@ export const formWrapper = WrappedComponent => {
         Object.keys(elements).forEach(e => {
           if (elementsTransform.hasOwnProperty(e)) {
             console.error(`[FORMWRAPPER] The "${e}" field already exists in the form.`);
+            return;
           }
           elementsTransform[e] = this.createFormElement(e, elements[e]);
         });
@@ -222,7 +225,7 @@ export const formWrapper = WrappedComponent => {
       return {
         defaultValue,
         validators,
-        value: defaultValue,
+        value: defaultValue || transformFalseValue(defaultValue),
         onChange: e => this.formElementOnChange(e, name)
       };
     }

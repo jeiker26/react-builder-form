@@ -1,7 +1,7 @@
 {
   "name": "@jkr26/react-forms-builder-logic",
   "description": "Small library to simplify the use of forms in React.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "keywords": [
     "react form",
     "form builder",
@@ -70,6 +70,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^6.0.0",
+    "sinon": "^7.2.3",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
