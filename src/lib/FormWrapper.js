@@ -206,6 +206,7 @@ export const formWrapper = WrappedComponent => {
         Object.keys(elements).forEach(e => {
           if (elementsTransform.hasOwnProperty(e)) {
             console.error(`[FORMWRAPPER] The "${e}" field already exists in the form.`);
+            return;
           }
           elementsTransform[e] = this.createFormElement(e, elements[e]);
         });
