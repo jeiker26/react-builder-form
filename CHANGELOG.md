@@ -15,8 +15,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+## [1.1.1] - 2019-02-15
+### Added
+- Add Codesandbox.
+
 ## [1.1.0] - 2019-02-15
-### Changed
+### Added
 - Add Wrapper Form.
 
 
