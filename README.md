@@ -13,17 +13,10 @@
 
 [![NPM downloads][npm-downloads-image]][npm-downloads-url]
 
-![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-<img 
-    alt="gzip size"
-    src="https://img.shields.io/badge/gzip%20size-7%20kB-brightgreen.svg"
-  />
-<a href="https://github.com/jeiker26/react-builder-form/pulls">
-    <img
-      alt="PRs welcome"
-      src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"
-    />
- </a>
+[![code style: prettier](https://badgen.net/badge/code%20style/prettier/green)](https://github.com/prettier/prettier)
+[![minzipped size](https://badgen.net/bundlephobia/minzip/@jkr26/react-forms-builder-logic)]
+[![PRs welcome](https://badgen.net/badge/PRs/welcome/green)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
 
 
 Small library to simplify the use of forms in React.
