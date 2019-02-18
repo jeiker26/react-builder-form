@@ -1,28 +1,18 @@
+Small library to simplify the use of forms in React 
+------
 
-[![build status][travis-image]][travis-url]
-[![node version](https://badgen.net/badge/node/>=5.4/green)](http://nodejs.org/download/)
-
-[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=master
-[travis-url]: https://travis-ci.org/jeiker26/react-builder-form
-[![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master)
-[![license](https://img.shields.io/github/license/jeiker26/react-builder-form.svg)](https://github.com/jeiker26/react-builder-form)
-
-[![NPM dependencies][npm-dependencies-image]][npm-dependencies-url] [![Last commit][last-commit-image]][last-commit-url]
-
-[![NPM downloads][npm-downloads-image]][npm-downloads-url]
-
-[![code style: prettier](https://badgen.net/badge/code%20style/prettier/green)](https://github.com/prettier/prettier)
+[![build status][travis-image]][travis-url] [![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master) [![NPM dependencies][npm-dependencies-image]][npm-dependencies-url] 
+[![license](https://img.shields.io/github/license/jeiker26/react-builder-form.svg)](https://github.com/jeiker26/react-builder-form) [![NPM downloads][npm-downloads-image]][npm-downloads-url] [![code style: prettier](https://badgen.net/badge/code%20style/prettier/green)](https://github.com/prettier/prettier) 
+[![Last commit][last-commit-image]][last-commit-url] [![PRs welcome](https://badgen.net/badge/PRs/welcome/green)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) [![node version](https://badgen.net/badge/node/>=5.4/green)](http://nodejs.org/download/)
 ![minzipped size](https://badgen.net/bundlephobia/minzip/@jkr26/react-forms-builder-logic)
-[![PRs welcome](https://badgen.net/badge/PRs/welcome/green)](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
-
-
-Small library to simplify the use of forms in React.
 
 With a simple **higher**-**order** component (HOC), you can get:
-1.  The values ​​of the inputs.
+1.  The values of the inputs.
 2.  The status of the form.
 3.  Control of validations.
+
+
+------
 
 ## Examples.
 - [Simple Form](https://codesandbox.io/s/xpnyv4vpyo)
@@ -271,3 +261,5 @@ MIT License.
 [release-url]: https://github.com/jeiker26/react-builder-form/releases
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
 [standard-url]: http://standardjs.com/
+[travis-image]: https://travis-ci.org/jeiker26/react-builder-form.svg?branch=master
+[travis-url]: https://travis-ci.org/jeiker26/react-builder-form
