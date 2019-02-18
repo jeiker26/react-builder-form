@@ -112,7 +112,9 @@ export const formWrapper = WrappedComponent => {
 
     /* 2 - Core Form */
     compile = e => {
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
       const errors = this.checkErrors();
       const values = this.values();
       this.setState({
