@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+## [1.1.2] - 2019-02-19
+### Changed
+- Add Codesandbox custom fields.
+- Litle fix, check prevent default in default submit.
+
 ## [1.1.1] - 2019-02-15
 ### Added
 - Add Codesandbox.
