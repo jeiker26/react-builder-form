@@ -1,4 +1,4 @@
-# Small library to simplify the use of forms in React 
+Small library to simplify the use of forms in React 
 ------
 
 [![build status][travis-image]][travis-url] [![Coverage Status](https://coveralls.io/repos/github/jeiker26/react-builder-form/badge.svg?branch=master)](https://coveralls.io/github/jeiker26/react-builder-form?branch=master) [![NPM dependencies][npm-dependencies-image]][npm-dependencies-url] 
