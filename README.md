@@ -13,7 +13,6 @@ With a simple **higher**-**order** component (HOC), you can get:
 
 
 ------
-------
 
 ## Examples.
 - [Simple Form](https://codesandbox.io/s/xpnyv4vpyo)
