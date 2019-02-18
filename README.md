@@ -18,6 +18,7 @@ With a simple **higher**-**order** component (HOC), you can get:
 - [Simple Form](https://codesandbox.io/s/xpnyv4vpyo)
 - [Advanced Form](https://codesandbox.io/s/18vkn34l6j)
 - [Field Generator Form](https://codesandbox.io/s/w02lkn71vw)
+- [Custom Fields](https://codesandbox.io/s/qxqpr7klp4) Use of the getInput interface ({ name, value, onChange})
 
 ## Getting Started
 
