@@ -18,7 +18,7 @@ With a simple **higher**-**order** component (HOC), you can get:
 - [Simple Form](https://codesandbox.io/s/xpnyv4vpyo)
 - [Advanced Form](https://codesandbox.io/s/18vkn34l6j)
 - [Field Generator Form](https://codesandbox.io/s/w02lkn71vw)
-- [Custom Fields](https://codesandbox.io/s/qxqpr7klp4) Use of the getInput interface ({ name, value, onChange})
+- [Custom Fields](https://codesandbox.io/s/qxqpr7klp4) Use of the getInput interface ({ name, value, onChange}). IMPORTANT: onChange parameter is an object with target and the value: `onChange({ target: { value } });`
 
 ## Getting Started
 
@@ -153,6 +153,34 @@ export const ExampleForm = formWrapper(ExampleFormComponent);
 ```
 
 - You can also get all the errors, with props `props.form.errors`.
+
+
+### Optional: control submit
+```jsx
+    ...
+    handleSubmit = e => {
+      e.preventDefault();
+      (...)
+      this.props.form.submit();
+    };
+
+    render() {
+        ...
+        <Form form={form}>
+          Name:
+          <input type="text" {...form.getInput("name")} />
+          {form.getErrors("name").map(e => (
+            <span key={e} style={{ color: "red" }}>
+              {e}
+            </span>
+          ))}
+
+          <button onClick={this.handleSubmit}>
+            Submit
+          </button>
+    ...
+```
+
 
 ### Doc
 #### Functions
