@@ -5,16 +5,18 @@ notifications:
   email:
   - jesusgraficap@gmail.com
 
+cache:
+  directories:
+  - node_modules
 before_install:
-  - pip install --user codecov
+  - npm update
 install:
   - npm install
 script:
   - npm run prepare
   - npm run test:ci
-  # - npm run coveralls
 after_success:
-  - codecov --file coverage/lcov.info --disable search
+  - cat ./coverage/lcov.info | COVERALLS_REPO_TOKEN=COVERALLS_REPO_TOKEN coveralls && rm -rf ./coverage
 
 branches:
   only:
