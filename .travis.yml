@@ -12,7 +12,7 @@ install:
 script:
   - npm run prepare
   - npm run test:ci
-  - npm run coveralls
+  # - npm run coveralls
 after_success:
   - codecov --file coverage/lcov.info --disable search
 

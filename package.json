@@ -9,7 +9,7 @@
     "react-component",
     "form"
   ],
-  "repository": ".",
+  "repository": "https://github.com/jeiker26/react-builder-form",
   "license": "MIT",
   "main": "dist/react-form-builder.js",
   "module": "dist/react-form-builder.js",
@@ -23,8 +23,8 @@
     "lint": "eslint src",
     "prepare": "npm run prebuild && npm run build",
     "test": "BABEL_ENV=test jest  --watchAll --no-cache --config ./jest.config.json",
-    "test:ci": "BABEL_ENV=test jest --coverage --no-cache --config ./jest.pro.config.json --runInBand",
     "test:coverage": "BABEL_ENV=test jest --watchAll --coverage --no-cache --config ./jest.config.json",
+    "test:ci": "BABEL_ENV=test jest --coverage --no-cache --config ./jest.pro.config.json --runInBand",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "start:example": "webpack-dev-server --config ./webpack.config.js --mode development",
     "release": "npm publish --access=public"
