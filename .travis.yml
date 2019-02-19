@@ -5,16 +5,13 @@ notifications:
   email:
   - jesusgraficap@gmail.com
 
-before_install:
-  - pip install --user codecov
 install:
   - npm install
 script:
   - npm run prepare
   - npm run test:ci
-  - npm run coveralls
 after_success:
-  - codecov --file coverage/lcov.info --disable search
+  - npm run coveralls
 
 branches:
   only:
